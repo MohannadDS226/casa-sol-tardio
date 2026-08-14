@@ -87,7 +87,7 @@ body {
   right: var(--pad);
   bottom: clamp(5.7rem, 13vh, 8.5rem);
   z-index: 2;
-  max-width: min(1120px, calc(100vw - (var(--pad) * 2)));
+  max-width: min(980px, calc(100vw - (var(--pad) * 2)));
 }
 
 .eyebrow {
@@ -100,7 +100,7 @@ body {
 
 .title-artwork {
   display: block;
-  width: clamp(19rem, 58vw, 54rem);
+  width: clamp(17rem, 38vw, 38rem);
   max-width: 100%;
   height: auto;
   object-fit: contain;
@@ -109,9 +109,9 @@ body {
 }
 
 .rule {
-  width: min(460px, 58vw);
+  width: min(420px, 44vw);
   height: 1px;
-  margin: clamp(1.2rem, 2.8vh, 2.2rem) 0 1rem;
+  margin: clamp(1.1rem, 2.2vh, 1.8rem) 0 .95rem;
   background: var(--line);
 }
 
@@ -120,7 +120,7 @@ body {
   align-items: baseline;
   justify-content: space-between;
   gap: 2rem;
-  max-width: 760px;
+  max-width: 680px;
 }
 
 .tagline {
@@ -158,14 +158,14 @@ body {
   .footerline { align-items: end; }
   .footerline span:first-child { max-width: 14rem; line-height: 1.55; }
   .hero-copy { bottom: clamp(6.8rem, 15vh, 9rem); }
-  .title-artwork { width: min(88vw, 36rem); }
+  .title-artwork { width: min(76vw, 31rem); }
   .bottom-copy { display: grid; gap: .9rem; }
-  .rule { width: 66vw; }
+  .rule { width: 60vw; }
 }
 
 @media (max-width: 480px) {
   .footerline span:first-child { max-width: 11rem; }
-  .title-artwork { width: 92vw; max-width: calc(100vw - (var(--pad) * 2)); }
+  .title-artwork { width: 78vw; max-width: calc(100vw - (var(--pad) * 2)); }
   .wash {
     background:
       linear-gradient(180deg, rgba(10,7,5,.24), rgba(10,7,5,.08) 30%, rgba(10,7,5,.22) 58%, rgba(10,7,5,.8)),
