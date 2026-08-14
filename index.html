@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17130f" />
+  <meta name="description" content="Casa Sol Tardío — a cinematic architectural visual story by Mohannad Visuals." />
+  <title>Casa Sol Tardío</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site-loader" data-loader>
+    <div class="loader-mark">CASA SOL TARDÍO</div>
+    <div class="loader-line"><span></span></div>
+  </div>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="Casa Sol Tardío home">CASA SOL TARDÍO</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#story">Story</a>
+      <a href="#film">Film</a>
+      <a href="#stills">Stills</a>
+      <a href="#bts">Behind Casa Sol</a>
+      <button class="studio-access" type="button" data-open-gate>Studio Access</button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-label="Casa Sol Tardío opening">
+      <div class="hero-media placeholder-media" data-hero-media>
+        <span>LANDING VIDEO / POSTER TRANSITION</span>
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-copy reveal">
+        <p class="eyebrow">A visual story by Mohannad Haikal</p>
+        <h1>Casa Sol Tardío</h1>
+        <p class="tagline">Where light lingers, home begins.</p>
+      </div>
+      <a class="scroll-cue" href="#story">Discover the house <span>↓</span></a>
+    </section>
+
+    <section id="story" class="chapter intro-section section-pad">
+      <div class="chapter-number">Chapter I</div>
+      <div class="chapter-grid">
+        <div>
+          <p class="eyebrow">The Arrival</p>
+          <h2>A house discovered through light, memory and stillness.</h2>
+        </div>
+        <div class="placeholder-frame tall"><span>HERO STILL</span></div>
+      </div>
+    </section>
+
+    <section id="stills" class="section-pad gallery-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Selected Stills</p>
+        <h2>Architecture becomes atmosphere.</h2>
+      </div>
+      <div class="editorial-grid">
+        <div class="placeholder-frame wide"><span>EXTERIOR HERO</span></div>
+        <div class="placeholder-frame portrait"><span>LIFESTYLE</span></div>
+        <div class="placeholder-frame square"><span>MACRO DETAIL</span></div>
+      </div>
+    </section>
+
+    <section id="film" class="film-section section-pad">
+      <div class="film-copy">
+        <p class="eyebrow">Watch the Film</p>
+        <h2>The house comes alive.</h2>
+      </div>
+      <div class="film-stage placeholder-media"><span>SHORT FILM</span></div>
+    </section>
+
+    <section id="bts" class="section-pad bts-section">
+      <div class="section-heading">
+        <p class="eyebrow">Behind Casa Sol</p>
+        <h2>Built as a cinematic visualization experience.</h2>
+      </div>
+      <div class="bts-grid">
+        <div class="placeholder-frame"><span>D5 / PROCESS</span></div>
+        <div class="placeholder-frame"><span>POST / DETAIL</span></div>
+      </div>
+    </section>
+
+    <section class="finale">
+      <div class="finale-inner">
+        <p class="eyebrow">Mallorca</p>
+        <h2>Where light lingers,<br />home begins.</h2>
+        <a href="#top">Back to the beginning ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="gate" data-gate>
+    <button class="gate-close" type="button" aria-label="Close" data-close-gate>×</button>
+    <div class="gate-panel">
+      <p class="eyebrow">Private access</p>
+      <h2>Design Sector</h2>
+      <p class="gate-copy">A private visualization strategy experience will live behind this gate.</p>
+      <form class="gate-form" data-gate-form>
+        <label for="studio-password">Password</label>
+        <div class="gate-row">
+          <input id="studio-password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" />
+          <button type="submit">Enter</button>
+        </div>
+        <p class="gate-note">Secure authentication will be connected before launch.</p>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
