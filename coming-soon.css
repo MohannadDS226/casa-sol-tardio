@@ -18,6 +18,126 @@ body {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+.poster-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(103, 62, 42, .22), transparent 35%),
+    #120f0c;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .8s ease, visibility .8s ease;
+}
+
+.poster-loader.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.poster-stage {
+  position: relative;
+  width: min(76vw, 30rem);
+  max-height: 78svh;
+  perspective: 1400px;
+  filter: drop-shadow(0 2rem 3rem rgba(0,0,0,.42));
+}
+
+.poster-roll {
+  position: relative;
+  width: 100%;
+  transform: translateY(-8%) rotateX(2deg);
+  transform-style: preserve-3d;
+  animation: poster-settle 2.8s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.poster-sheet-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  clip-path: inset(0 0 100% 0);
+  animation: poster-unroll 1.85s cubic-bezier(.22,.78,.18,1) .28s forwards;
+  background: #211912;
+}
+
+.poster-sheet {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.018);
+  animation: poster-breathe 3s ease-out .35s both;
+}
+
+.poster-sheet-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.06), transparent 12%, transparent 86%, rgba(0,0,0,.13)),
+    linear-gradient(180deg, rgba(255,255,255,.07), transparent 10%, transparent 88%, rgba(0,0,0,.14));
+  mix-blend-mode: soft-light;
+}
+
+.poster-roller {
+  position: absolute;
+  left: -2.5%;
+  width: 105%;
+  height: clamp(.7rem, 1.7vw, 1.1rem);
+  z-index: 4;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, #6b4a35 0%, #2d2119 42%, #130f0c 65%, #5f412f 100%);
+  box-shadow:
+    0 .25rem .6rem rgba(0,0,0,.38),
+    inset 0 1px rgba(255,255,255,.13);
+}
+
+.poster-roller-top {
+  top: -.45rem;
+}
+
+.poster-roller-bottom {
+  bottom: -.45rem;
+  transform: translateY(-100%);
+  animation: roller-drop 1.85s cubic-bezier(.22,.78,.18,1) .28s forwards;
+}
+
+.loader-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at center, transparent 30%, rgba(6,4,3,.28) 78%, rgba(4,3,2,.66) 100%);
+}
+
+@keyframes poster-unroll {
+  0% { clip-path: inset(0 0 100% 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes roller-drop {
+  0% { transform: translateY(calc(-100% - 0.2rem)); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes poster-settle {
+  0% { transform: translateY(-12%) rotateX(7deg) scale(.96); }
+  65% { transform: translateY(0) rotateX(0deg) scale(1); }
+  100% { transform: translateY(0) rotateX(0deg) scale(1); }
+}
+
+@keyframes poster-breathe {
+  from { transform: scale(1.03); filter: brightness(.92); }
+  to { transform: scale(1.018); filter: brightness(1); }
+}
+
 .coming-soon {
   position: relative;
   min-height: 100svh;
@@ -153,6 +273,7 @@ body {
 }
 
 @media (max-width: 760px) {
+  .poster-stage { width: min(78vw, 24rem); max-height: 74svh; }
   .hero-video { object-position: 50% 50%; }
   .location { display: none; }
   .footerline { align-items: end; }
@@ -164,6 +285,7 @@ body {
 }
 
 @media (max-width: 480px) {
+  .poster-stage { width: min(74vw, 20rem); }
   .footerline span:first-child { max-width: 11rem; }
   .title-artwork { width: 78vw; max-width: calc(100vw - (var(--pad) * 2)); }
   .wash {
@@ -174,6 +296,12 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .poster-roll,
+  .poster-sheet-wrap,
+  .poster-sheet,
+  .poster-roller-bottom { animation: none; }
+  .poster-sheet-wrap { clip-path: inset(0); }
+  .poster-roller-bottom { transform: none; }
   .hero-video { display: none; }
   .coming-soon {
     background:
