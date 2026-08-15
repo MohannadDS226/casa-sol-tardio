@@ -7,10 +7,24 @@
   <meta name="description" content="Casa Sol Tardío — a cinematic architectural visual story by Mohannad Haikal. Coming soon." />
   <title>Casa Sol Tardío — Coming Soon</title>
   <link rel="icon" type="image/svg+xml" href="public/assets/images/favicon.svg" />
+  <link rel="preload" as="image" href="public/assets/images/CASA_SOL_TARDIO_POSTER.jpg" />
   <link rel="preload" as="image" href="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" />
   <link rel="stylesheet" href="coming-soon.css" />
 </head>
 <body>
+  <div class="poster-loader" aria-hidden="true">
+    <div class="poster-stage">
+      <div class="poster-roll">
+        <div class="poster-roller poster-roller-top"></div>
+        <div class="poster-sheet-wrap">
+          <img class="poster-sheet" src="public/assets/images/CASA_SOL_TARDIO_POSTER.jpg" alt="" decoding="async" />
+        </div>
+        <div class="poster-roller poster-roller-bottom"></div>
+      </div>
+    </div>
+    <div class="loader-vignette"></div>
+  </div>
+
   <main class="coming-soon" aria-label="Casa Sol Tardío coming soon">
     <div class="hero-video-wrap" aria-hidden="true">
       <video class="hero-video" autoplay muted loop playsinline preload="metadata">
