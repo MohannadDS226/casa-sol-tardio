@@ -26,11 +26,11 @@ body {
   place-items: center;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 44%, rgba(103, 62, 42, .22), transparent 35%),
-    #120f0c;
+    radial-gradient(circle at 52% 42%, rgba(123, 76, 49, .25), transparent 34%),
+    linear-gradient(180deg, #17110d 0%, #100d0a 100%);
   opacity: 1;
   visibility: visible;
-  transition: opacity .8s ease, visibility .8s ease;
+  transition: opacity 1s cubic-bezier(.22,.61,.36,1), visibility 1s ease;
 }
 
 .poster-loader.is-leaving {
@@ -41,28 +41,50 @@ body {
 
 .poster-stage {
   position: relative;
-  width: min(76vw, 30rem);
-  max-height: 78svh;
-  perspective: 1400px;
-  filter: drop-shadow(0 2rem 3rem rgba(0,0,0,.42));
+  width: min(72vw, 29rem);
+  max-height: 80svh;
+  perspective: 1800px;
+  perspective-origin: 50% 38%;
 }
 
 .poster-roll {
-  position: relative;
-  width: 100%;
-  transform: translateY(-8%) rotateX(2deg);
-  transform-style: preserve-3d;
-  animation: poster-settle 2.8s cubic-bezier(.2,.8,.2,1) both;
-}
-
-.poster-sheet-wrap {
+  --wind-x: 0deg;
+  --wind-y: 0deg;
+  --wind-z: 0deg;
+  --wind-shift: 0px;
   position: relative;
   width: 100%;
   aspect-ratio: 2 / 3;
+  transform-style: preserve-3d;
+  transform-origin: 50% 0%;
+  transform:
+    translate3d(var(--wind-shift), -3%, 0)
+    rotateX(calc(2deg + var(--wind-y)))
+    rotateY(var(--wind-x))
+    rotateZ(var(--wind-z));
+  animation: poster-body-settle 3.15s cubic-bezier(.16,.84,.23,1) both;
+  will-change: transform;
+}
+
+.poster-sheet-wrap {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
   clip-path: inset(0 0 100% 0);
-  animation: poster-unroll 1.85s cubic-bezier(.22,.78,.18,1) .28s forwards;
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
   background: #211912;
+  animation: poster-unroll 2.25s cubic-bezier(.18,.76,.18,1) .2s forwards;
+  will-change: clip-path, transform;
+}
+
+.poster-surface {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+  animation: paper-flex 3.2s cubic-bezier(.16,.84,.23,1) .2s both;
+  will-change: transform;
 }
 
 .poster-sheet {
@@ -70,43 +92,114 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.018);
-  animation: poster-breathe 3s ease-out .35s both;
+  backface-visibility: hidden;
+  transform: translateZ(.5px) scale(1.006);
+  filter: saturate(.98) contrast(1.01) brightness(.98);
 }
 
-.poster-sheet-wrap::after {
-  content: "";
+.poster-light {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  opacity: .46;
   background:
-    linear-gradient(90deg, rgba(255,255,255,.06), transparent 12%, transparent 86%, rgba(0,0,0,.13)),
-    linear-gradient(180deg, rgba(255,255,255,.07), transparent 10%, transparent 88%, rgba(0,0,0,.14));
+    linear-gradient(90deg, rgba(255,255,255,.11) 0%, rgba(255,255,255,.02) 11%, transparent 27%, transparent 72%, rgba(0,0,0,.12) 100%),
+    linear-gradient(180deg, rgba(255,246,225,.08), transparent 14%, transparent 76%, rgba(0,0,0,.16));
   mix-blend-mode: soft-light;
+  transform: translateZ(1px);
+  animation: light-drift 2.8s ease-in-out .35s both;
+}
+
+.poster-sheet-wrap::before,
+.poster-sheet-wrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.poster-sheet-wrap::before {
+  top: 0;
+  height: 14%;
+  background: linear-gradient(180deg, rgba(0,0,0,.24), transparent 78%);
+  opacity: .32;
+}
+
+.poster-sheet-wrap::after {
+  bottom: 0;
+  height: 12%;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,.26));
+  transform-origin: 50% 100%;
+  animation: lower-curl 2.7s cubic-bezier(.2,.75,.2,1) .22s both;
 }
 
 .poster-roller {
   position: absolute;
-  left: -2.5%;
-  width: 105%;
-  height: clamp(.7rem, 1.7vw, 1.1rem);
-  z-index: 4;
+  left: -2.4%;
+  width: 104.8%;
+  height: clamp(.78rem, 1.8vw, 1.12rem);
+  z-index: 7;
   border-radius: 999px;
+  transform-style: preserve-3d;
   background:
-    linear-gradient(180deg, #6b4a35 0%, #2d2119 42%, #130f0c 65%, #5f412f 100%);
+    linear-gradient(180deg, #7a563d 0%, #412e22 35%, #1a130f 61%, #694934 100%);
   box-shadow:
-    0 .25rem .6rem rgba(0,0,0,.38),
-    inset 0 1px rgba(255,255,255,.13);
+    0 .28rem .75rem rgba(0,0,0,.44),
+    inset 0 1px rgba(255,255,255,.18),
+    inset 0 -2px rgba(0,0,0,.3);
+}
+
+.poster-roller::after {
+  content: "";
+  position: absolute;
+  inset: 20% 2%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.16) 42%, rgba(255,255,255,.05) 57%, transparent 76%);
+  opacity: .6;
 }
 
 .poster-roller-top {
-  top: -.45rem;
+  top: -.5rem;
+  transform: translateZ(9px) rotateX(-5deg);
 }
 
 .poster-roller-bottom {
-  bottom: -.45rem;
-  transform: translateY(-100%);
-  animation: roller-drop 1.85s cubic-bezier(.22,.78,.18,1) .28s forwards;
+  top: -.45rem;
+  transform: translateZ(14px) rotateX(7deg);
+  animation: roller-descend 2.25s cubic-bezier(.18,.76,.18,1) .2s forwards;
+  will-change: top, transform;
+}
+
+.poster-roller-bottom::before {
+  content: "";
+  position: absolute;
+  left: 1.5%;
+  right: 1.5%;
+  top: 70%;
+  height: 1.7rem;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,.42), transparent 68%);
+  filter: blur(.35rem);
+  transform: translateZ(-8px) scaleY(.6);
+  opacity: .62;
+}
+
+.poster-floor-shadow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -2rem;
+  height: 2.8rem;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,.52), rgba(0,0,0,.12) 55%, transparent 74%);
+  filter: blur(.6rem);
+  transform: translateZ(-20px) scaleX(.88);
+  opacity: 0;
+  animation: floor-shadow-in 2.8s ease .35s forwards;
 }
 
 .loader-vignette {
@@ -114,28 +207,79 @@ body {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at center, transparent 30%, rgba(6,4,3,.28) 78%, rgba(4,3,2,.66) 100%);
+    radial-gradient(circle at 50% 45%, transparent 27%, rgba(6,4,3,.2) 69%, rgba(4,3,2,.64) 100%);
 }
 
 @keyframes poster-unroll {
-  0% { clip-path: inset(0 0 100% 0); }
-  100% { clip-path: inset(0 0 0 0); }
+  0% {
+    clip-path: inset(0 0 100% 0);
+    transform: translateZ(18px) rotateX(-12deg) scaleY(.94);
+  }
+  42% {
+    transform: translateZ(8px) rotateX(4.2deg) scaleY(1.006);
+  }
+  67% {
+    transform: translateZ(4px) rotateX(-2.2deg) scaleY(.997);
+  }
+  84% {
+    transform: translateZ(2px) rotateX(1deg) scaleY(1.002);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translateZ(0) rotateX(0deg) scaleY(1);
+  }
 }
 
-@keyframes roller-drop {
-  0% { transform: translateY(calc(-100% - 0.2rem)); }
-  100% { transform: translateY(0); }
+@keyframes roller-descend {
+  0% {
+    top: -.45rem;
+    transform: translateZ(18px) rotateX(16deg) scaleX(.99);
+  }
+  48% {
+    transform: translateZ(24px) rotateX(-9deg) scaleX(1.01);
+  }
+  72% {
+    transform: translateZ(17px) rotateX(5deg) scaleX(.997);
+  }
+  100% {
+    top: calc(100% - .55rem);
+    transform: translateZ(12px) rotateX(0deg) scaleX(1);
+  }
 }
 
-@keyframes poster-settle {
-  0% { transform: translateY(-12%) rotateX(7deg) scale(.96); }
-  65% { transform: translateY(0) rotateX(0deg) scale(1); }
-  100% { transform: translateY(0) rotateX(0deg) scale(1); }
+@keyframes poster-body-settle {
+  0% { transform: translate3d(-1.5%, -11%, 0) rotateX(9deg) rotateY(-3.6deg) rotateZ(-1.2deg) scale(.965); }
+  36% { transform: translate3d(1.1%, -1.5%, 0) rotateX(-2.5deg) rotateY(2.2deg) rotateZ(.55deg) scale(1.006); }
+  58% { transform: translate3d(-.55%, .35%, 0) rotateX(1.15deg) rotateY(-1.1deg) rotateZ(-.3deg) scale(.998); }
+  76% { transform: translate3d(.28%, 0, 0) rotateX(-.55deg) rotateY(.58deg) rotateZ(.16deg) scale(1.001); }
+  100% { transform: translate3d(0,0,0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1); }
 }
 
-@keyframes poster-breathe {
-  from { transform: scale(1.03); filter: brightness(.92); }
-  to { transform: scale(1.018); filter: brightness(1); }
+@keyframes paper-flex {
+  0% { transform: perspective(1200px) rotateY(-2deg) skewX(-.35deg); }
+  43% { transform: perspective(1200px) rotateY(1.35deg) skewX(.18deg); }
+  64% { transform: perspective(1200px) rotateY(-.75deg) skewX(-.1deg); }
+  82% { transform: perspective(1200px) rotateY(.35deg); }
+  100% { transform: perspective(1200px) rotateY(0deg) skewX(0); }
+}
+
+@keyframes lower-curl {
+  0% { transform: perspective(700px) rotateX(62deg) translateY(70%); opacity: .75; }
+  42% { transform: perspective(700px) rotateX(-18deg) translateY(8%); opacity: .4; }
+  68% { transform: perspective(700px) rotateX(9deg) translateY(0); opacity: .3; }
+  100% { transform: perspective(700px) rotateX(0deg) translateY(0); opacity: .22; }
+}
+
+@keyframes light-drift {
+  0% { transform: translate3d(-2%,0,1px); opacity: .28; }
+  48% { transform: translate3d(1.8%,0,1px); opacity: .52; }
+  100% { transform: translate3d(0,0,1px); opacity: .4; }
+}
+
+@keyframes floor-shadow-in {
+  0% { opacity: 0; transform: translateZ(-20px) scaleX(.58) scaleY(.55); }
+  55% { opacity: .48; transform: translateZ(-20px) scaleX(.94) scaleY(.7); }
+  100% { opacity: .38; transform: translateZ(-20px) scaleX(.88) scaleY(.62); }
 }
 
 .coming-soon {
@@ -273,7 +417,7 @@ body {
 }
 
 @media (max-width: 760px) {
-  .poster-stage { width: min(78vw, 24rem); max-height: 74svh; }
+  .poster-stage { width: min(76vw, 23rem); max-height: 75svh; }
   .hero-video { object-position: 50% 50%; }
   .location { display: none; }
   .footerline { align-items: end; }
@@ -285,7 +429,7 @@ body {
 }
 
 @media (max-width: 480px) {
-  .poster-stage { width: min(74vw, 20rem); }
+  .poster-stage { width: min(72vw, 19rem); }
   .footerline span:first-child { max-width: 11rem; }
   .title-artwork { width: 78vw; max-width: calc(100vw - (var(--pad) * 2)); }
   .wash {
@@ -298,10 +442,15 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .poster-roll,
   .poster-sheet-wrap,
-  .poster-sheet,
-  .poster-roller-bottom { animation: none; }
-  .poster-sheet-wrap { clip-path: inset(0); }
-  .poster-roller-bottom { transform: none; }
+  .poster-surface,
+  .poster-light,
+  .poster-roller-bottom,
+  .poster-floor-shadow,
+  .poster-sheet-wrap::after { animation: none; }
+  .poster-sheet-wrap { clip-path: inset(0); transform: none; }
+  .poster-surface { transform: none; }
+  .poster-roller-bottom { top: calc(100% - .55rem); transform: translateZ(12px); }
+  .poster-floor-shadow { opacity: .32; }
   .hero-video { display: none; }
   .coming-soon {
     background:
