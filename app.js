@@ -50,7 +50,7 @@ const wrapWords = (element) => {
 
 document.querySelectorAll('[data-word-reveal]').forEach(wrapWords);
 
-const revealTargets = document.querySelectorAll('[data-word-reveal], [data-meta-reveal], [data-copy-reveal]');
+const revealTargets = document.querySelectorAll('[data-word-reveal], [data-meta-reveal], [data-copy-reveal], [data-image-reveal]');
 
 if ('IntersectionObserver' in window) {
   const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -60,8 +60,8 @@ if ('IntersectionObserver' in window) {
       observer.unobserve(entry.target);
     });
   }, {
-    threshold: 0.22,
-    rootMargin: '0px 0px -8% 0px'
+    threshold: 0.16,
+    rootMargin: '0px 0px -6% 0px'
   });
 
   revealTargets.forEach((target) => revealObserver.observe(target));
