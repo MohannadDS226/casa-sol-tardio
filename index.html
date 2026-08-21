@@ -4,66 +4,156 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#17130f" />
-  <meta name="description" content="Casa Sol Tardío — a cinematic architectural visual story by Mohannad Haikal. Coming soon." />
-  <title>Casa Sol Tardío — Coming Soon</title>
+  <meta name="description" content="Casa Sol Tardío — a cinematic architectural visual story by Mohannad Haikal." />
+  <title>Casa Sol Tardío — Mohannad Haikal</title>
   <link rel="icon" type="image/svg+xml" href="public/assets/images/favicon.svg" />
   <link rel="preload" as="image" href="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp" type="image/webp" />
-  <link rel="preload" as="image" href="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" />
-  <link rel="stylesheet" href="coming-soon.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="poster-loader" aria-hidden="true">
-    <div class="poster-stage">
-      <div class="poster-roll">
-        <div class="poster-roller poster-roller-top"></div>
-        <div class="poster-sheet-wrap">
-          <div class="poster-surface">
-            <img class="poster-sheet" src="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp" alt="" decoding="async" />
-            <div class="poster-light" aria-hidden="true"></div>
-          </div>
-        </div>
-        <div class="poster-roller poster-roller-bottom"></div>
-        <div class="poster-floor-shadow" aria-hidden="true"></div>
-      </div>
-    </div>
-    <div class="loader-vignette"></div>
+  <div class="site-loader" data-loader aria-hidden="true">
+    <span class="loader-mark">CASA SOL TARDÍO</span>
+    <span class="loader-line"><span></span></span>
   </div>
 
-  <main class="coming-soon" aria-label="Casa Sol Tardío coming soon">
-    <div class="hero-video-wrap" aria-hidden="true">
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata">
-        <source src="public/assets/video/coming-soon.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <div class="wash" aria-hidden="true"></div>
-    <div class="grain" aria-hidden="true"></div>
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="Casa Sol Tardío home">Casa Sol Tardío</a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#story">Story</a>
+      <a href="#stills">Stills</a>
+      <a href="#film">Film</a>
+      <a href="#bts">BTS</a>
+      <a href="#magazine">Magazine</a>
+      <button class="studio-access" type="button" data-open-gate>Studio Access</button>
+    </nav>
+  </header>
 
-    <header class="topbar">
-      <span class="monogram">MH</span>
-      <span class="location">Mallorca · A Visual Story</span>
-    </header>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true">
+        <video
+          class="hero-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp"
+        >
+          <source src="public/assets/video/coming-soon.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
 
-    <section class="hero-copy">
-      <p class="eyebrow">A project by Mohannad Haikal</p>
-      <img
-        class="title-artwork"
-        src="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png"
-        alt="Casa Sol Tardío"
-        decoding="async"
-      />
-      <div class="rule" aria-hidden="true"></div>
-      <div class="bottom-copy">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Mallorca · 2023—2026</p>
+        <h1 id="hero-title">Casa Sol Tardío</h1>
         <p class="tagline">Where light lingers, home begins.</p>
-        <p class="status">Coming soon</p>
+      </div>
+
+      <a class="scroll-cue" href="#story">Enter the story <span aria-hidden="true">↓</span></a>
+    </section>
+
+    <section class="chapter section-pad" id="story" aria-labelledby="story-title">
+      <p class="chapter-number">01 · The House</p>
+      <div class="chapter-grid">
+        <h2 id="story-title">A house made for the slower hours.</h2>
+        <div class="chapter-copy">
+          <p>Casa Sol Tardío is a cinematic architectural study shaped by Mediterranean light, memory, material and the quiet rituals of home.</p>
+          <p>Conceived in 2023 and completed in 2026, the project moves through the villa as a lived story rather than a sequence of isolated renders.</p>
+        </div>
       </div>
     </section>
 
-    <footer class="footerline">
-      <span>Architecture · Memory · The Road Home</span>
-      <span>MMXXVI</span>
-    </footer>
+    <section class="gallery-shell section-pad" id="stills" aria-labelledby="stills-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">02 · The Stills</p>
+          <h2 id="stills-title">Light, room by room.</h2>
+        </div>
+        <p class="section-note">Final image sequence will be curated from the completed Casa Sol library.</p>
+      </div>
+
+      <div class="editorial-grid" aria-label="Reserved stills layout">
+        <div class="placeholder-frame tall"><span>Hero still</span></div>
+        <div class="placeholder-frame"><span>Interior</span></div>
+        <div class="placeholder-frame"><span>Courtyard</span></div>
+        <div class="placeholder-frame wide"><span>Panoramic chapter image</span></div>
+        <div class="placeholder-frame portrait"><span>Portrait detail</span></div>
+        <div class="placeholder-frame"><span>Night study</span></div>
+      </div>
+    </section>
+
+    <section class="film-section section-pad" id="film" aria-labelledby="film-title">
+      <div class="section-heading film-copy">
+        <div>
+          <p class="eyebrow">03 · The Film</p>
+          <h2 id="film-title">The house in motion.</h2>
+        </div>
+        <p class="section-note">Reserved for the final Casa Sol film.</p>
+      </div>
+      <div class="placeholder-media film-stage" role="img" aria-label="Reserved film player area">
+        <span>Film module reserved</span>
+      </div>
+    </section>
+
+    <section class="bts-section section-pad" id="bts" aria-labelledby="bts-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">04 · Behind the House</p>
+          <h2 id="bts-title">The moments between takes.</h2>
+        </div>
+        <p class="section-note">A cinematic BTS chapter will live here once the final animations are ready.</p>
+      </div>
+      <div class="bts-grid">
+        <div class="placeholder-frame"><span>BTS film</span></div>
+        <div class="placeholder-frame portrait"><span>BTS stills</span></div>
+      </div>
+    </section>
+
+    <section class="magazine-section section-pad" id="magazine" aria-labelledby="magazine-title" data-reserved-module>
+      <div class="magazine-shell">
+        <div class="magazine-copy">
+          <p class="eyebrow">05 · The Issue</p>
+          <h2 id="magazine-title">Casa Sol Tardío, in print.</h2>
+          <p>The digital editorial issue is already reserved in the site architecture. The finished issue will open here as a full-screen reading experience.</p>
+          <span class="magazine-status">Digital issue module reserved</span>
+        </div>
+        <div class="magazine-cover placeholder-frame portrait" aria-label="Reserved magazine cover area">
+          <span>Official cover</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="finale" id="credits" aria-labelledby="credits-title">
+      <div class="finale-inner">
+        <p class="eyebrow">Casa Sol Tardío · Mallorca</p>
+        <h2 id="credits-title">Architecture · Memory · The Road Home</h2>
+        <p class="credit-line">A visual story by Mohannad Haikal</p>
+        <p class="credit-tools">3ds Max · D5 Render · AI-assisted post-production</p>
+        <a href="#top">Return to the light ↑</a>
+      </div>
+    </section>
   </main>
 
-  <script src="coming-soon.js" defer></script>
+  <dialog class="gate" data-gate aria-labelledby="gate-title">
+    <button class="gate-close" type="button" data-close-gate aria-label="Close">×</button>
+    <div class="gate-panel">
+      <p class="eyebrow">Private Presentation</p>
+      <h2 id="gate-title">Studio Access</h2>
+      <p class="gate-copy">A private presentation built inside Casa Sol Tardío. Access is reserved for invited viewers.</p>
+      <form class="gate-form" data-gate-form>
+        <label for="studio-password">Password</label>
+        <div class="gate-row">
+          <input id="studio-password" name="password" type="password" autocomplete="current-password" />
+          <button type="submit">Enter</button>
+        </div>
+        <p class="gate-note" aria-live="polite">The final villa-door transition will be connected here.</p>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="app.js" defer></script>
 </body>
 </html>
