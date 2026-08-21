@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="hero.css" />
   <link rel="stylesheet" href="typography.css" />
+  <link rel="stylesheet" href="gallery.css" />
 </head>
 <body>
   <div class="site-loader" data-loader aria-hidden="true">
@@ -78,22 +79,148 @@
       </div>
     </section>
 
-    <section class="gallery-shell section-pad type-section" id="stills" aria-labelledby="stills-title" data-motion-section>
+    <section class="gallery-shell type-section" id="stills" aria-labelledby="stills-title" data-motion-section>
       <div class="ghost-word ghost-word-right" aria-hidden="true" data-ghost-word>LIGHT</div>
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow" data-meta-reveal>02 · The Stills</p>
-          <h2 id="stills-title" data-word-reveal>Light, room by room.</h2>
+
+      <div class="gallery-intro section-pad">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-meta-reveal>02 · The Stills</p>
+            <h2 id="stills-title" data-word-reveal>Light, room by room.</h2>
+          </div>
+          <p class="section-note" data-copy-reveal>A sequence of arrivals, interiors, rituals and after-dark moments — composed as one continuous visual story.</p>
         </div>
-        <p class="section-note" data-copy-reveal>Final image sequence will be curated from the completed Casa Sol library.</p>
       </div>
-      <div class="editorial-grid" aria-label="Reserved stills layout">
-        <div class="placeholder-frame tall"><span>Hero still</span></div>
-        <div class="placeholder-frame"><span>Interior</span></div>
-        <div class="placeholder-frame"><span>Courtyard</span></div>
-        <div class="placeholder-frame wide"><span>Panoramic chapter image</span></div>
-        <div class="placeholder-frame portrait"><span>Portrait detail</span></div>
-        <div class="placeholder-frame"><span>Night study</span></div>
+
+      <div class="casa-gallery" aria-label="Casa Sol Tardío final renders">
+        <figure class="gallery-shot shot-wide shot-opener" data-image-reveal>
+          <div class="shot-media">
+            <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319165/first-glimpse.webp" alt="Casa Sol Tardío exterior in warm Mediterranean light" width="2400" height="1491" loading="lazy" decoding="async" />
+          </div>
+          <figcaption><span>CAM 01</span><strong>The First Glimpse</strong><em>Arrival</em></figcaption>
+        </figure>
+
+        <div class="gallery-pair pair-arrival">
+          <figure class="gallery-shot shot-portrait" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319213/the-arrival.webp" alt="The Arrival at Casa Sol Tardío" width="1599" height="2400" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>CAM 20</span><strong>The Arrival</strong><em>Threshold</em></figcaption>
+          </figure>
+
+          <figure class="gallery-shot shot-portrait shot-lower" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319221/bougainvillea-courtyard.webp" alt="Bougainvillea courtyard at Casa Sol Tardío" width="1799" height="2400" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>CAM 18</span><strong>The Bougainvillea Courtyard</strong><em>Garden</em></figcaption>
+          </figure>
+        </div>
+
+        <div class="gallery-essay" aria-hidden="true">
+          <span>The house is never still.</span>
+          <strong>Light moves first.</strong>
+        </div>
+
+        <div class="gallery-pair pair-interior">
+          <figure class="gallery-shot shot-portrait shot-narrow" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319237/the-passage.webp" alt="Interior passage at Casa Sol Tardío" width="1799" height="2400" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>CAM 07</span><strong>The Passage</strong><em>Interior</em></figcaption>
+          </figure>
+
+          <figure class="gallery-shot shot-portrait shot-upper" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319229/morning-beyond.webp" alt="Morning interior and garden view at Casa Sol Tardío" width="1799" height="2400" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>CAM 06</span><strong>The Morning Beyond</strong><em>Morning</em></figcaption>
+          </figure>
+        </div>
+
+        <figure class="gallery-shot shot-wide shot-cinematic" data-image-reveal>
+          <div class="shot-media">
+            <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319249/sun-was-waiting.webp" alt="Sunlit courtyard at Casa Sol Tardío" width="2400" height="1350" loading="lazy" decoding="async" />
+          </div>
+          <figcaption><span>CAM 03</span><strong>The Sun Was Waiting</strong><em>Afternoon</em></figcaption>
+        </figure>
+
+        <div class="gallery-detail-run">
+          <figure class="gallery-shot shot-detail" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319325/fountain-keeps-time.webp" alt="Fountain detail at Casa Sol Tardío" width="1122" height="1402" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>DETAIL 06</span><strong>The Fountain Keeps Time</strong><em>Texture</em></figcaption>
+          </figure>
+
+          <figure class="gallery-shot shot-detail shot-detail-main" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319300/golden-company.webp" alt="A quiet lifestyle moment in golden light at Casa Sol Tardío" width="1919" height="2400" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>DETAIL 20</span><strong>Golden Company</strong><em>Ritual</em></figcaption>
+          </figure>
+
+          <figure class="gallery-shot shot-detail" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319334/between-the-pages.webp" alt="Editorial reading detail at Casa Sol Tardío" width="1122" height="1402" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>DETAIL 07</span><strong>Between the Pages</strong><em>Still life</em></figcaption>
+          </figure>
+        </div>
+
+        <figure class="gallery-shot shot-wide shot-water" data-image-reveal>
+          <div class="shot-media">
+            <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319258/petals-afloat.webp" alt="Pool and floating petals at Casa Sol Tardío" width="2400" height="1350" loading="lazy" decoding="async" />
+          </div>
+          <figcaption><span>CAM 17</span><strong>Petals Afloat</strong><em>Water</em></figcaption>
+        </figure>
+
+        <div class="gallery-pair pair-life">
+          <figure class="gallery-shot shot-portrait shot-lower" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319308/petals-on-water.webp" alt="Petals on water detail at Casa Sol Tardío" width="1919" height="2400" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>DETAIL 22</span><strong>Petals on Water</strong><em>Detail</em></figcaption>
+          </figure>
+
+          <figure class="gallery-shot shot-portrait shot-narrow" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319293/view-she-carries.webp" alt="A vertical lifestyle view at Casa Sol Tardío" width="1350" height="2400" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>CAM 16</span><strong>The View She Carries</strong><em>Life at Casa</em></figcaption>
+          </figure>
+        </div>
+
+        <div class="gallery-night-intro">
+          <span data-meta-reveal>After the light changes</span>
+          <h3 data-word-reveal>Casa after dusk.</h3>
+        </div>
+
+        <div class="gallery-pair pair-night">
+          <figure class="gallery-shot shot-portrait" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319270/after-lights.webp" alt="Casa Sol Tardío illuminated after dusk" width="1799" height="2400" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>CAM 23</span><strong>After the Lights Come On</strong><em>Night</em></figcaption>
+          </figure>
+
+          <figure class="gallery-shot shot-portrait shot-lower" data-image-reveal>
+            <div class="shot-media">
+              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319277/moonlit-threshold.webp" alt="Moonlit threshold at Casa Sol Tardío" width="1799" height="2400" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><span>CAM 13</span><strong>Moonlit Threshold</strong><em>Nocturne</em></figcaption>
+          </figure>
+        </div>
+
+        <figure class="gallery-shot shot-finale" data-image-reveal>
+          <div class="shot-media">
+            <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319284/eclipse-witness.webp" alt="Solar eclipse witnessed from Casa Sol Tardío" width="1599" height="2400" loading="lazy" decoding="async" />
+          </div>
+          <div class="shot-finale-copy" aria-hidden="true">
+            <span>One house.</span>
+            <strong>A thousand kinds of light.</strong>
+          </div>
+          <figcaption><span>CAM 29</span><strong>Eclipse Witness</strong><em>Special study</em></figcaption>
+        </figure>
       </div>
     </section>
 
