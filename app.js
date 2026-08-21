@@ -4,9 +4,17 @@ const gate = document.querySelector('[data-gate]');
 const openGate = document.querySelector('[data-open-gate]');
 const closeGate = document.querySelector('[data-close-gate]');
 const gateForm = document.querySelector('[data-gate-form]');
+const heroVideo = document.querySelector('.hero-video');
 
-window.addEventListener('load', () => {
-  window.setTimeout(() => loader?.classList.add('is-hidden'), 500);
+const hideLoader = () => {
+  window.setTimeout(() => loader?.classList.add('is-hidden'), 350);
+};
+
+window.addEventListener('load', hideLoader, { once: true });
+window.setTimeout(hideLoader, 2400);
+
+heroVideo?.play().catch(() => {
+  // The poster frame remains visible if autoplay is blocked.
 });
 
 const onScroll = () => {
@@ -30,5 +38,5 @@ gate?.addEventListener('click', (event) => {
 gateForm?.addEventListener('submit', (event) => {
   event.preventDefault();
   const note = gateForm.querySelector('.gate-note');
-  if (note) note.textContent = 'Private pitch authentication and villa-gate transition will be connected before launch.';
+  if (note) note.textContent = 'The private villa-door experience will open from this gate.';
 });
