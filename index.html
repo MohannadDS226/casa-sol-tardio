@@ -11,6 +11,7 @@
   <link rel="preload" as="image" href="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="hero.css" />
+  <link rel="stylesheet" href="typography.css" />
 </head>
 <body>
   <div class="site-loader" data-loader aria-hidden="true">
@@ -33,15 +34,7 @@
   <main id="top">
     <section class="hero" aria-labelledby="hero-title" data-hero>
       <div class="hero-media" aria-hidden="true">
-        <video
-          class="hero-video"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          poster="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp"
-        >
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp">
           <source src="public/assets/video/coming-soon.mp4" type="video/mp4" />
         </video>
       </div>
@@ -56,12 +49,10 @@
       <div class="hero-copy hero-fade">
         <p class="eyebrow">A cinematic architectural story</p>
         <h1 id="hero-title" class="sr-only">Casa Sol Tardío</h1>
-        <img
-          class="hero-title-art"
-          src="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png"
-          alt="Casa Sol Tardío"
-          decoding="async"
-        />
+        <div class="hero-logo-reveal">
+          <img class="hero-title-art" src="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" alt="Casa Sol Tardío" decoding="async" />
+          <span class="hero-logo-light" aria-hidden="true"></span>
+        </div>
         <div class="hero-rule" aria-hidden="true"></div>
         <div class="hero-lower-copy">
           <p class="tagline">Where light lingers, home begins.</p>
@@ -75,24 +66,26 @@
       </div>
     </section>
 
-    <section class="chapter section-pad" id="story" aria-labelledby="story-title">
-      <p class="chapter-number">01 · The House</p>
+    <section class="chapter section-pad type-section" id="story" aria-labelledby="story-title" data-motion-section>
+      <div class="ghost-word" aria-hidden="true" data-ghost-word>CASA</div>
+      <p class="chapter-number" data-meta-reveal>01 · The House</p>
       <div class="chapter-grid">
-        <h2 id="story-title">A house made for the slower hours.</h2>
+        <h2 id="story-title" data-word-reveal>A house made for the slower hours.</h2>
         <div class="chapter-copy">
-          <p>Casa Sol Tardío is a cinematic architectural study shaped by Mediterranean light, memory, material and the quiet rituals of home.</p>
-          <p>Conceived in 2023 and completed in 2026, the project moves through the villa as a lived story rather than a sequence of isolated renders.</p>
+          <p data-copy-reveal>Casa Sol Tardío is a cinematic architectural study shaped by Mediterranean light, memory, material and the quiet rituals of home.</p>
+          <p data-copy-reveal>Conceived in 2023 and completed in 2026, the project moves through the villa as a lived story rather than a sequence of isolated renders.</p>
         </div>
       </div>
     </section>
 
-    <section class="gallery-shell section-pad" id="stills" aria-labelledby="stills-title">
+    <section class="gallery-shell section-pad type-section" id="stills" aria-labelledby="stills-title" data-motion-section>
+      <div class="ghost-word ghost-word-right" aria-hidden="true" data-ghost-word>LIGHT</div>
       <div class="section-heading">
         <div>
-          <p class="eyebrow">02 · The Stills</p>
-          <h2 id="stills-title">Light, room by room.</h2>
+          <p class="eyebrow" data-meta-reveal>02 · The Stills</p>
+          <h2 id="stills-title" data-word-reveal>Light, room by room.</h2>
         </div>
-        <p class="section-note">Final image sequence will be curated from the completed Casa Sol library.</p>
+        <p class="section-note" data-copy-reveal>Final image sequence will be curated from the completed Casa Sol library.</p>
       </div>
       <div class="editorial-grid" aria-label="Reserved stills layout">
         <div class="placeholder-frame tall"><span>Hero still</span></div>
@@ -104,24 +97,26 @@
       </div>
     </section>
 
-    <section class="film-section section-pad" id="film" aria-labelledby="film-title">
+    <section class="film-section section-pad type-section" id="film" aria-labelledby="film-title" data-motion-section>
+      <div class="ghost-word" aria-hidden="true" data-ghost-word>MOTION</div>
       <div class="section-heading film-copy">
         <div>
-          <p class="eyebrow">03 · The Film</p>
-          <h2 id="film-title">The house in motion.</h2>
+          <p class="eyebrow" data-meta-reveal>03 · The Film</p>
+          <h2 id="film-title" data-word-reveal>The house in motion.</h2>
         </div>
-        <p class="section-note">Reserved for the final Casa Sol film.</p>
+        <p class="section-note" data-copy-reveal>Reserved for the final Casa Sol film.</p>
       </div>
       <div class="placeholder-media film-stage" role="img" aria-label="Reserved film player area"><span>Film module reserved</span></div>
     </section>
 
-    <section class="bts-section section-pad" id="bts" aria-labelledby="bts-title">
+    <section class="bts-section section-pad type-section" id="bts" aria-labelledby="bts-title" data-motion-section>
+      <div class="ghost-word ghost-word-right" aria-hidden="true" data-ghost-word>BETWEEN</div>
       <div class="section-heading">
         <div>
-          <p class="eyebrow">04 · Behind the House</p>
-          <h2 id="bts-title">The moments between takes.</h2>
+          <p class="eyebrow" data-meta-reveal>04 · Behind the House</p>
+          <h2 id="bts-title" data-word-reveal>The moments between takes.</h2>
         </div>
-        <p class="section-note">A cinematic BTS chapter will live here once the final animations are ready.</p>
+        <p class="section-note" data-copy-reveal>A cinematic BTS chapter will live here once the final animations are ready.</p>
       </div>
       <div class="bts-grid">
         <div class="placeholder-frame"><span>BTS film</span></div>
@@ -129,25 +124,27 @@
       </div>
     </section>
 
-    <section class="magazine-section section-pad" id="magazine" aria-labelledby="magazine-title" data-reserved-module>
+    <section class="magazine-section section-pad type-section" id="magazine" aria-labelledby="magazine-title" data-reserved-module data-motion-section>
+      <div class="ghost-word" aria-hidden="true" data-ghost-word>ISSUE</div>
       <div class="magazine-shell">
         <div class="magazine-copy">
-          <p class="eyebrow">05 · The Issue</p>
-          <h2 id="magazine-title">Casa Sol Tardío, in print.</h2>
-          <p>The digital editorial issue is already reserved in the site architecture. The finished issue will open here as a full-screen reading experience.</p>
-          <span class="magazine-status">Digital issue module reserved</span>
+          <p class="eyebrow" data-meta-reveal>05 · The Issue</p>
+          <h2 id="magazine-title" data-word-reveal>Casa Sol Tardío, in print.</h2>
+          <p data-copy-reveal>The digital editorial issue is already reserved in the site architecture. The finished issue will open here as a full-screen reading experience.</p>
+          <span class="magazine-status" data-meta-reveal>Digital issue module reserved</span>
         </div>
         <div class="magazine-cover placeholder-frame portrait" aria-label="Reserved magazine cover area"><span>Official cover</span></div>
       </div>
     </section>
 
-    <section class="finale" id="credits" aria-labelledby="credits-title">
+    <section class="finale type-section" id="credits" aria-labelledby="credits-title" data-motion-section>
+      <div class="ghost-word ghost-word-center" aria-hidden="true" data-ghost-word>HOME</div>
       <div class="finale-inner">
-        <p class="eyebrow">Casa Sol Tardío · Mallorca</p>
-        <h2 id="credits-title">Architecture · Memory · The Road Home</h2>
-        <p class="credit-line">A visual story by Mohannad Haikal</p>
-        <p class="credit-tools">3ds Max · D5 Render · AI-assisted post-production</p>
-        <a href="#top">Return to the light ↑</a>
+        <p class="eyebrow" data-meta-reveal>Casa Sol Tardío · Mallorca</p>
+        <h2 id="credits-title" data-word-reveal>Architecture · Memory · The Road Home</h2>
+        <p class="credit-line" data-copy-reveal>A visual story by Mohannad Haikal</p>
+        <p class="credit-tools" data-copy-reveal>3ds Max · D5 Render · AI-assisted post-production</p>
+        <a href="#top" data-meta-reveal>Return to the light ↑</a>
       </div>
     </section>
   </main>
