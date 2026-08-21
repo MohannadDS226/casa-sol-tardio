@@ -125,3 +125,352 @@ gateForm?.addEventListener('submit', (event) => {
   const note = gateForm.querySelector('.gate-note');
   if (note) note.textContent = 'The private villa-door experience will open from this gate.';
 });
+
+/* -------------------------------------------------------------------------- */
+/* Cinematic render viewer                                                     */
+/* -------------------------------------------------------------------------- */
+
+const ensureLightboxStyles = () => {
+  if (document.querySelector('link[data-casa-lightbox-styles]')) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'lightbox.css';
+  link.dataset.casaLightboxStyles = 'true';
+  document.head.appendChild(link);
+};
+
+const buildLightbox = () => {
+  const viewer = document.createElement('div');
+  viewer.className = 'casa-lightbox';
+  viewer.setAttribute('role', 'dialog');
+  viewer.setAttribute('aria-modal', 'true');
+  viewer.setAttribute('aria-label', 'Casa Sol Tardío render viewer');
+  viewer.setAttribute('aria-hidden', 'true');
+
+  viewer.innerHTML = `
+    <button class="casa-lightbox-close" type="button" aria-label="Close render viewer"></button>
+    <button class="casa-lightbox-nav casa-lightbox-prev" type="button" aria-label="Previous render">‹</button>
+    <div class="casa-lightbox-stage">
+      <img class="casa-lightbox-image" alt="" decoding="async" />
+    </div>
+    <button class="casa-lightbox-nav casa-lightbox-next" type="button" aria-label="Next render">›</button>
+    <div class="casa-lightbox-meta">
+      <div class="casa-lightbox-copy">
+        <p class="casa-lightbox-kicker"></p>
+        <p class="casa-lightbox-title"></p>
+      </div>
+      <p class="casa-lightbox-count"></p>
+    </div>
+  `;
+
+  document.body.appendChild(viewer);
+  return viewer;
+};
+
+const initRenderLightbox = () => {
+  const shots = [...document.querySelectorAll('#stills .gallery-shot')];
+  if (!shots.length) return;
+
+  ensureLightboxStyles();
+
+  const items = shots.map((shot, index) => {
+    const image = shot.querySelector('.shot-media img');
+    const camera = shot.querySelector('figcaption span')?.textContent.trim() || '';
+    const title = shot.querySelector('figcaption strong')?.textContent.trim() || image?.alt || `Render ${index + 1}`;
+    const category = shot.querySelector('figcaption em')?.textContent.trim() || '';
+
+    shot.dataset.lightboxReady = 'true';
+    shot.dataset.lightboxIndex = String(index);
+    shot.tabIndex = 0;
+    shot.setAttribute('role', 'button');
+    shot.setAttribute('aria-label', `View ${title} fullscreen`);
+
+    return {
+      shot,
+      image,
+      src: image?.currentSrc || image?.src || '',
+      alt: image?.alt || title,
+      camera,
+      title,
+      category
+    };
+  }).filter((item) => item.image && item.src);
+
+  if (!items.length) return;
+
+  const viewer = buildLightbox();
+  const stage = viewer.querySelector('.casa-lightbox-stage');
+  const viewerImage = viewer.querySelector('.casa-lightbox-image');
+  const kicker = viewer.querySelector('.casa-lightbox-kicker');
+  const title = viewer.querySelector('.casa-lightbox-title');
+  const count = viewer.querySelector('.casa-lightbox-count');
+  const closeButton = viewer.querySelector('.casa-lightbox-close');
+  const prevButton = viewer.querySelector('.casa-lightbox-prev');
+  const nextButton = viewer.querySelector('.casa-lightbox-next');
+
+  let currentIndex = 0;
+  let previousFocus = null;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let isAnimating = false;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const normalizeIndex = (index) => (index + items.length) % items.length;
+
+  const preloadNeighbors = (index) => {
+    [index - 1, index + 1].forEach((candidate) => {
+      const item = items[normalizeIndex(candidate)];
+      if (!item?.src) return;
+      const preload = new Image();
+      preload.src = item.src;
+    });
+  };
+
+  const updateMeta = (item, index) => {
+    kicker.textContent = [item.camera, item.category].filter(Boolean).join(' · ');
+    title.textContent = item.title;
+    count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+  };
+
+  const loadViewerImage = async (item) => {
+    viewerImage.src = item.src;
+    viewerImage.alt = item.alt;
+
+    try {
+      if (viewerImage.decode) await viewerImage.decode();
+    } catch (_) {
+      // A rendered image can still be shown even when decode() rejects.
+    }
+  };
+
+  const animateFromShot = async (item) => {
+    if (prefersReducedMotion || !item.image?.animate) {
+      viewer.classList.add('is-settled');
+      return;
+    }
+
+    const sourceRect = item.image.getBoundingClientRect();
+    const targetRect = viewerImage.getBoundingClientRect();
+    if (!sourceRect.width || !sourceRect.height || !targetRect.width || !targetRect.height) {
+      viewer.classList.add('is-settled');
+      return;
+    }
+
+    const clone = item.image.cloneNode(true);
+    clone.removeAttribute('loading');
+    clone.className = 'casa-lightbox-clone';
+    Object.assign(clone.style, {
+      left: `${sourceRect.left}px`,
+      top: `${sourceRect.top}px`,
+      width: `${sourceRect.width}px`,
+      height: `${sourceRect.height}px`,
+      borderRadius: '0px'
+    });
+    document.body.appendChild(clone);
+
+    const animation = clone.animate([
+      {
+        left: `${sourceRect.left}px`,
+        top: `${sourceRect.top}px`,
+        width: `${sourceRect.width}px`,
+        height: `${sourceRect.height}px`,
+        opacity: 1
+      },
+      {
+        left: `${targetRect.left}px`,
+        top: `${targetRect.top}px`,
+        width: `${targetRect.width}px`,
+        height: `${targetRect.height}px`,
+        opacity: 1
+      }
+    ], {
+      duration: 520,
+      easing: 'cubic-bezier(.2,.7,.2,1)',
+      fill: 'forwards'
+    });
+
+    try {
+      await animation.finished;
+    } catch (_) {
+      // Ignore cancelled animations.
+    }
+
+    viewer.classList.add('is-settled');
+    clone.remove();
+  };
+
+  const openViewer = async (index) => {
+    if (isAnimating) return;
+    isAnimating = true;
+    currentIndex = normalizeIndex(index);
+    const item = items[currentIndex];
+
+    previousFocus = document.activeElement;
+    viewer.classList.remove('is-settled', 'is-switching');
+    viewer.classList.add('is-open');
+    viewer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('has-lightbox');
+
+    updateMeta(item, currentIndex);
+    await loadViewerImage(item);
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    await animateFromShot(item);
+    preloadNeighbors(currentIndex);
+    closeButton.focus({ preventScroll: true });
+    isAnimating = false;
+  };
+
+  const switchTo = async (index) => {
+    if (isAnimating) return;
+    isAnimating = true;
+    currentIndex = normalizeIndex(index);
+    const item = items[currentIndex];
+
+    viewer.classList.add('is-switching');
+    viewer.classList.remove('is-settled');
+    updateMeta(item, currentIndex);
+
+    await new Promise((resolve) => window.setTimeout(resolve, prefersReducedMotion ? 0 : 130));
+    await loadViewerImage(item);
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+
+    viewer.classList.remove('is-switching');
+    viewer.classList.add('is-settled');
+    preloadNeighbors(currentIndex);
+    isAnimating = false;
+  };
+
+  const animateBackToShot = async (item) => {
+    if (prefersReducedMotion || !viewerImage.animate || !item.image) return;
+
+    const targetRect = item.image.getBoundingClientRect();
+    const sourceRect = viewerImage.getBoundingClientRect();
+    const isTargetNearViewport = targetRect.bottom > -120 && targetRect.top < window.innerHeight + 120;
+    if (!isTargetNearViewport || !sourceRect.width || !targetRect.width) return;
+
+    const clone = viewerImage.cloneNode(true);
+    clone.className = 'casa-lightbox-clone';
+    Object.assign(clone.style, {
+      left: `${sourceRect.left}px`,
+      top: `${sourceRect.top}px`,
+      width: `${sourceRect.width}px`,
+      height: `${sourceRect.height}px`
+    });
+    document.body.appendChild(clone);
+    viewerImage.style.opacity = '0';
+
+    const animation = clone.animate([
+      {
+        left: `${sourceRect.left}px`,
+        top: `${sourceRect.top}px`,
+        width: `${sourceRect.width}px`,
+        height: `${sourceRect.height}px`,
+        opacity: 1
+      },
+      {
+        left: `${targetRect.left}px`,
+        top: `${targetRect.top}px`,
+        width: `${targetRect.width}px`,
+        height: `${targetRect.height}px`,
+        opacity: .96
+      }
+    ], {
+      duration: 440,
+      easing: 'cubic-bezier(.2,.7,.2,1)',
+      fill: 'forwards'
+    });
+
+    try {
+      await animation.finished;
+    } catch (_) {
+      // Ignore cancelled animations.
+    }
+
+    clone.remove();
+    viewerImage.style.opacity = '';
+  };
+
+  const closeViewer = async () => {
+    if (!viewer.classList.contains('is-open') || isAnimating) return;
+    isAnimating = true;
+    const item = items[currentIndex];
+
+    viewer.classList.remove('is-settled');
+    await animateBackToShot(item);
+
+    viewer.classList.remove('is-open', 'is-switching');
+    viewer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('has-lightbox');
+    viewerImage.removeAttribute('src');
+
+    if (previousFocus instanceof HTMLElement) previousFocus.focus({ preventScroll: true });
+    isAnimating = false;
+  };
+
+  shots.forEach((shot) => {
+    const activate = () => {
+      const index = Number(shot.dataset.lightboxIndex);
+      if (Number.isFinite(index)) openViewer(index);
+    };
+
+    shot.addEventListener('click', activate);
+    shot.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activate();
+      }
+    });
+  });
+
+  closeButton.addEventListener('click', closeViewer);
+  prevButton.addEventListener('click', () => switchTo(currentIndex - 1));
+  nextButton.addEventListener('click', () => switchTo(currentIndex + 1));
+
+  stage.addEventListener('click', (event) => {
+    if (event.target === stage) closeViewer();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (!viewer.classList.contains('is-open')) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeViewer();
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      switchTo(currentIndex - 1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      switchTo(currentIndex + 1);
+    } else if (event.key === 'Tab') {
+      const focusable = [closeButton, prevButton, nextButton];
+      const current = focusable.indexOf(document.activeElement);
+      if (event.shiftKey && current <= 0) {
+        event.preventDefault();
+        nextButton.focus();
+      } else if (!event.shiftKey && current === focusable.length - 1) {
+        event.preventDefault();
+        closeButton.focus();
+      }
+    }
+  });
+
+  viewer.addEventListener('touchstart', (event) => {
+    const touch = event.changedTouches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  }, { passive: true });
+
+  viewer.addEventListener('touchend', (event) => {
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+
+    if (Math.abs(deltaX) < 45 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+    if (deltaX < 0) switchTo(currentIndex + 1);
+    else switchTo(currentIndex - 1);
+  }, { passive: true });
+};
+
+initRenderLightbox();
