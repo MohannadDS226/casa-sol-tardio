@@ -8,6 +8,7 @@
   <title>Casa Sol Tardío — Mohannad Haikal</title>
   <link rel="icon" type="image/svg+xml" href="public/assets/images/favicon.svg" />
   <link rel="preload" as="image" href="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp" type="image/webp" />
+  <link rel="preload" as="image" href="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -29,7 +30,7 @@
   </header>
 
   <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
+    <section class="hero" aria-labelledby="hero-title" data-hero>
       <div class="hero-media" aria-hidden="true">
         <video
           class="hero-video"
@@ -46,13 +47,31 @@
       <div class="hero-overlay" aria-hidden="true"></div>
       <div class="grain" aria-hidden="true"></div>
 
-      <div class="hero-copy reveal">
-        <p class="eyebrow">Mallorca · 2023—2026</p>
-        <h1 id="hero-title">Casa Sol Tardío</h1>
-        <p class="tagline">Where light lingers, home begins.</p>
+      <div class="hero-kicker hero-fade">
+        <span>Mallorca</span>
+        <span>2023—2026</span>
       </div>
 
-      <a class="scroll-cue" href="#story">Enter the story <span aria-hidden="true">↓</span></a>
+      <div class="hero-copy hero-fade">
+        <p class="eyebrow">A cinematic architectural story</p>
+        <h1 id="hero-title" class="sr-only">Casa Sol Tardío</h1>
+        <img
+          class="hero-title-art"
+          src="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png"
+          alt="Casa Sol Tardío"
+          decoding="async"
+        />
+        <div class="hero-rule" aria-hidden="true"></div>
+        <div class="hero-lower-copy">
+          <p class="tagline">Where light lingers, home begins.</p>
+          <p class="hero-credit">A visual story by Mohannad Haikal</p>
+        </div>
+      </div>
+
+      <div class="hero-footer hero-fade">
+        <span>Architecture · Memory · The Road Home</span>
+        <a class="scroll-cue" href="#story">Enter the story <span aria-hidden="true">↓</span></a>
+      </div>
     </section>
 
     <section class="chapter section-pad" id="story" aria-labelledby="story-title">
@@ -74,7 +93,6 @@
         </div>
         <p class="section-note">Final image sequence will be curated from the completed Casa Sol library.</p>
       </div>
-
       <div class="editorial-grid" aria-label="Reserved stills layout">
         <div class="placeholder-frame tall"><span>Hero still</span></div>
         <div class="placeholder-frame"><span>Interior</span></div>
@@ -93,9 +111,7 @@
         </div>
         <p class="section-note">Reserved for the final Casa Sol film.</p>
       </div>
-      <div class="placeholder-media film-stage" role="img" aria-label="Reserved film player area">
-        <span>Film module reserved</span>
-      </div>
+      <div class="placeholder-media film-stage" role="img" aria-label="Reserved film player area"><span>Film module reserved</span></div>
     </section>
 
     <section class="bts-section section-pad" id="bts" aria-labelledby="bts-title">
@@ -120,9 +136,7 @@
           <p>The digital editorial issue is already reserved in the site architecture. The finished issue will open here as a full-screen reading experience.</p>
           <span class="magazine-status">Digital issue module reserved</span>
         </div>
-        <div class="magazine-cover placeholder-frame portrait" aria-label="Reserved magazine cover area">
-          <span>Official cover</span>
-        </div>
+        <div class="magazine-cover placeholder-frame portrait" aria-label="Reserved magazine cover area"><span>Official cover</span></div>
       </div>
     </section>
 
