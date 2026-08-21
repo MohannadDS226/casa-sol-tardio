@@ -1,0 +1,23 @@
+{
+  "provider": "Cloudinary",
+  "cloud": "vysyrabp",
+  "source": "CASA SOL TARDÍO / Final Renders",
+  "optimization": "WebP, max 2400px long edge, web quality",
+  "assets": [
+    {"slug":"first-glimpse","title":"The First Glimpse","camera":"CAM 01","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319165/first-glimpse.webp","width":2400,"height":1491},
+    {"slug":"the-arrival","title":"The Arrival","camera":"CAM 20","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319213/the-arrival.webp","width":1599,"height":2400},
+    {"slug":"bougainvillea-courtyard","title":"The Bougainvillea Courtyard","camera":"CAM 18","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319221/bougainvillea-courtyard.webp","width":1799,"height":2400},
+    {"slug":"morning-beyond","title":"The Morning Beyond","camera":"CAM 06","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319229/morning-beyond.webp","width":1799,"height":2400},
+    {"slug":"the-passage","title":"The Passage","camera":"CAM 07","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319237/the-passage.webp","width":1799,"height":2400},
+    {"slug":"sun-was-waiting","title":"The Sun Was Waiting","camera":"CAM 03","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319249/sun-was-waiting.webp","width":2400,"height":1350},
+    {"slug":"petals-afloat","title":"Petals Afloat","camera":"CAM 17","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319258/petals-afloat.webp","width":2400,"height":1350},
+    {"slug":"after-lights","title":"After the Lights Come On","camera":"CAM 23","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319270/after-lights.webp","width":1799,"height":2400},
+    {"slug":"moonlit-threshold","title":"Moonlit Threshold","camera":"CAM 13","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319277/moonlit-threshold.webp","width":1799,"height":2400},
+    {"slug":"eclipse-witness","title":"Eclipse Witness","camera":"CAM 29","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319284/eclipse-witness.webp","width":1599,"height":2400},
+    {"slug":"view-she-carries","title":"The View She Carries","camera":"CAM 16","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319293/view-she-carries.webp","width":1350,"height":2400},
+    {"slug":"golden-company","title":"Golden Company","camera":"DETAIL 20","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319300/golden-company.webp","width":1919,"height":2400},
+    {"slug":"petals-on-water","title":"Petals on Water","camera":"DETAIL 22","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319308/petals-on-water.webp","width":1919,"height":2400},
+    {"slug":"fountain-keeps-time","title":"The Fountain Keeps Time","camera":"DETAIL 06","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319325/fountain-keeps-time.webp","width":1122,"height":1402},
+    {"slug":"between-the-pages","title":"Between the Pages","camera":"DETAIL 07","url":"https://res.cloudinary.com/vysyrabp/image/upload/v1787319334/between-the-pages.webp","width":1122,"height":1402}
+  ]
+}
