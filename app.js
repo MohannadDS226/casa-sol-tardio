@@ -6,6 +6,7 @@ const openGate = document.querySelector('[data-open-gate]');
 const closeGate = document.querySelector('[data-close-gate]');
 const gateForm = document.querySelector('[data-gate-form]');
 const heroVideo = document.querySelector('.hero-video');
+const motionSections = [...document.querySelectorAll('[data-motion-section]')];
 
 let readyShown = false;
 
@@ -26,6 +27,48 @@ heroVideo?.play().catch(() => {
   // The poster frame remains visible if autoplay is blocked.
 });
 
+const wrapWords = (element) => {
+  if (!element || element.dataset.wordsReady === 'true') return;
+
+  const words = element.textContent.trim().split(/\s+/);
+  element.textContent = '';
+
+  words.forEach((word, index) => {
+    const mask = document.createElement('span');
+    mask.className = 'word-reveal';
+
+    const inner = document.createElement('span');
+    inner.textContent = word;
+    inner.style.setProperty('--word-index', index);
+
+    mask.appendChild(inner);
+    element.appendChild(mask);
+  });
+
+  element.dataset.wordsReady = 'true';
+};
+
+document.querySelectorAll('[data-word-reveal]').forEach(wrapWords);
+
+const revealTargets = document.querySelectorAll('[data-word-reveal], [data-meta-reveal], [data-copy-reveal]');
+
+if ('IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.22,
+    rootMargin: '0px 0px -8% 0px'
+  });
+
+  revealTargets.forEach((target) => revealObserver.observe(target));
+} else {
+  revealTargets.forEach((target) => target.classList.add('is-visible'));
+}
+
 const onScroll = () => {
   const y = window.scrollY;
   header?.classList.toggle('is-scrolled', y > 32);
@@ -35,10 +78,34 @@ const onScroll = () => {
     const progress = Math.min(Math.max(y / height, 0), 1);
     hero.style.setProperty('--hero-progress', progress.toFixed(3));
   }
+
+  motionSections.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    const viewport = window.innerHeight || 1;
+    const travel = rect.height + viewport;
+    const progress = Math.min(Math.max((viewport - rect.top) / travel, 0), 1);
+    const ghost = section.querySelector('[data-ghost-word]');
+
+    if (ghost) {
+      const direction = ghost.classList.contains('ghost-word-right') ? -1 : 1;
+      const shift = (progress - .5) * 120 * direction;
+      ghost.style.setProperty('--ghost-shift', `${shift.toFixed(1)}px`);
+    }
+  });
 };
 
-window.addEventListener('scroll', onScroll, { passive: true });
-window.addEventListener('resize', onScroll, { passive: true });
+let scrollTicking = false;
+const requestScrollUpdate = () => {
+  if (scrollTicking) return;
+  scrollTicking = true;
+  window.requestAnimationFrame(() => {
+    onScroll();
+    scrollTicking = false;
+  });
+};
+
+window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+window.addEventListener('resize', requestScrollUpdate, { passive: true });
 onScroll();
 
 openGate?.addEventListener('click', () => {
