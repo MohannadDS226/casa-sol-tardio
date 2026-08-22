@@ -3,275 +3,81 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#17130f" />
-  <meta name="description" content="Casa Sol Tardío — a cinematic architectural visual story by Mohannad Haikal." />
-  <title>Casa Sol Tardío — Mohannad Haikal</title>
+  <meta name="theme-color" content="#0b0908" />
+  <meta name="description" content="Casa Sol Tardío — an interactive architectural journey through light, time and memory in Mallorca." />
+  <title>Casa Sol Tardío — Solar Atlas</title>
   <link rel="icon" type="image/svg+xml" href="public/assets/images/favicon.svg" />
-  <link rel="preload" as="image" href="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp" type="image/webp" />
   <link rel="preload" as="image" href="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="hero.css" />
-  <link rel="stylesheet" href="typography.css" />
-  <link rel="stylesheet" href="gallery.css" />
+  <link rel="preload" as="image" href="https://res.cloudinary.com/vysyrabp/image/upload/v1787319165/first-glimpse.webp" />
+  <link rel="stylesheet" href="world.css" />
 </head>
 <body>
-  <div class="site-loader" data-loader aria-hidden="true">
-    <span class="loader-mark">CASA SOL TARDÍO</span>
-    <span class="loader-line"><span></span></span>
+  <div class="world-loader" data-loader aria-hidden="true">
+    <div class="loader-orbit"><span class="loader-mark">Casa Sol Tardío</span></div>
   </div>
 
-  <header class="site-header" data-header>
-    <a class="brand" href="#top" aria-label="Casa Sol Tardío home">Casa Sol Tardío</a>
-    <nav class="nav" aria-label="Primary navigation">
-      <a href="#story">Story</a>
-      <a href="#stills">Stills</a>
-      <a href="#film">Film</a>
-      <a href="#bts">BTS</a>
-      <a href="#magazine">Magazine</a>
-      <button class="studio-access" type="button" data-open-gate>Studio Access</button>
-    </nav>
-  </header>
+  <aside class="world-ui" aria-label="Casa Solar Atlas navigation">
+    <a class="world-brand" href="#top">Casa Sol Tardío<span>Solar Atlas · Mallorca</span></a>
+    <div class="world-progress" aria-hidden="true"><span></span></div>
+    <div class="sundial" aria-hidden="true">
+      <div class="sundial-time" data-time>06:42<span data-time-phase>Dawn</span></div>
+    </div>
+    <div class="world-chapter" aria-live="polite">
+      <small data-chapter-small>CAM 01 · Arrival</small>
+      <strong data-chapter-strong>The First Glimpse</strong>
+    </div>
+  </aside>
 
   <main id="top">
-    <section class="hero" aria-labelledby="hero-title" data-hero>
-      <div class="hero-media" aria-hidden="true">
-        <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp">
-          <source src="public/assets/video/coming-soon.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <div class="hero-overlay" aria-hidden="true"></div>
-      <div class="grain" aria-hidden="true"></div>
+    <section class="journey" data-journey aria-label="A day inside Casa Sol Tardío">
+      <div class="journey-stage" data-stage>
+        <div class="sky" aria-hidden="true"></div>
+        <div class="haze" aria-hidden="true"></div>
+        <div class="stars" aria-hidden="true"></div>
+        <div class="arch-lines" aria-hidden="true"></div>
 
-      <div class="hero-kicker hero-fade">
-        <span>Mallorca</span>
-        <span>2023—2026</span>
-      </div>
-
-      <div class="hero-copy hero-fade">
-        <p class="eyebrow">A cinematic architectural story</p>
-        <h1 id="hero-title" class="sr-only">Casa Sol Tardío</h1>
-        <div class="hero-logo-reveal">
-          <img class="hero-title-art" src="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" alt="Casa Sol Tardío" decoding="async" />
-          <span class="hero-logo-light" aria-hidden="true"></span>
+        <div class="sun-orbit" aria-hidden="true">
+          <div class="sun" data-sun><div class="moon" data-moon></div></div>
         </div>
-        <div class="hero-rule" aria-hidden="true"></div>
-        <div class="hero-lower-copy">
-          <p class="tagline">Where light lingers, home begins.</p>
-          <p class="hero-credit">A visual story by Mohannad Haikal</p>
+
+        <div class="shadow-word" data-world-word aria-hidden="true">ARRIVAL</div>
+
+        <div class="opening" data-opening>
+          <div class="opening-inner">
+            <p class="opening-kicker">Mallorca · 2023—2026 · A visual story by Mohannad Haikal</p>
+            <img class="opening-logo" src="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" alt="Casa Sol Tardío" />
+            <div class="opening-line"></div>
+            <p class="opening-copy">Where light lingers, home begins.</p>
+            <div class="scroll-orbit">Scroll</div>
+          </div>
         </div>
-      </div>
 
-      <div class="hero-footer hero-fade">
-        <span>Architecture · Memory · The Road Home</span>
-        <a class="scroll-cue" href="#story">Enter the story <span aria-hidden="true">↓</span></a>
-      </div>
-    </section>
+        <div class="portal-layer" data-portals aria-live="off"></div>
 
-    <section class="chapter section-pad type-section" id="story" aria-labelledby="story-title" data-motion-section>
-      <div class="ghost-word" aria-hidden="true" data-ghost-word>CASA</div>
-      <p class="chapter-number" data-meta-reveal>01 · The House</p>
-      <div class="chapter-grid">
-        <h2 id="story-title" data-word-reveal>A house made for the slower hours.</h2>
-        <div class="chapter-copy">
-          <p data-copy-reveal>Casa Sol Tardío is a cinematic architectural study shaped by Mediterranean light, memory, material and the quiet rituals of home.</p>
-          <p data-copy-reveal>Conceived in 2023 and completed in 2026, the project moves through the villa as a lived story rather than a sequence of isolated renders.</p>
+        <div class="scene-quote" data-quote aria-hidden="true">
+          <small>Dawn</small>
+          <strong>The house appears before the day fully does.</strong>
         </div>
-      </div>
-    </section>
 
-    <section class="gallery-shell type-section" id="stills" aria-labelledby="stills-title" data-motion-section>
-      <div class="ghost-word ghost-word-right" aria-hidden="true" data-ghost-word>LIGHT</div>
-
-      <div class="gallery-intro section-pad">
-        <div class="section-heading">
+        <div class="eclipse-title" data-eclipse-title aria-hidden="true">
           <div>
-            <p class="eyebrow" data-meta-reveal>02 · The Stills</p>
-            <h2 id="stills-title" data-word-reveal>Light, room by room.</h2>
+            <small>For one impossible moment</small>
+            <h2>The sun<br />went quiet.</h2>
           </div>
-          <p class="section-note" data-copy-reveal>A sequence of arrivals, interiors, rituals and after-dark moments — composed as one continuous visual story.</p>
         </div>
-      </div>
-
-      <div class="casa-gallery" aria-label="Casa Sol Tardío final renders">
-        <figure class="gallery-shot shot-wide shot-opener" data-image-reveal>
-          <div class="shot-media">
-            <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319165/first-glimpse.webp" alt="Casa Sol Tardío exterior in warm Mediterranean light" width="2400" height="1491" loading="lazy" decoding="async" />
-          </div>
-          <figcaption><span>CAM 01</span><strong>The First Glimpse</strong><em>Arrival</em></figcaption>
-        </figure>
-
-        <div class="gallery-pair pair-arrival">
-          <figure class="gallery-shot shot-portrait" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319213/the-arrival.webp" alt="The Arrival at Casa Sol Tardío" width="1599" height="2400" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>CAM 20</span><strong>The Arrival</strong><em>Threshold</em></figcaption>
-          </figure>
-
-          <figure class="gallery-shot shot-portrait shot-lower" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319221/bougainvillea-courtyard.webp" alt="Bougainvillea courtyard at Casa Sol Tardío" width="1799" height="2400" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>CAM 18</span><strong>The Bougainvillea Courtyard</strong><em>Garden</em></figcaption>
-          </figure>
-        </div>
-
-        <div class="gallery-essay" aria-hidden="true">
-          <span>The house is never still.</span>
-          <strong>Light moves first.</strong>
-        </div>
-
-        <div class="gallery-pair pair-interior">
-          <figure class="gallery-shot shot-portrait shot-narrow" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319237/the-passage.webp" alt="Interior passage at Casa Sol Tardío" width="1799" height="2400" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>CAM 07</span><strong>The Passage</strong><em>Interior</em></figcaption>
-          </figure>
-
-          <figure class="gallery-shot shot-portrait shot-upper" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319229/morning-beyond.webp" alt="Morning interior and garden view at Casa Sol Tardío" width="1799" height="2400" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>CAM 06</span><strong>The Morning Beyond</strong><em>Morning</em></figcaption>
-          </figure>
-        </div>
-
-        <figure class="gallery-shot shot-wide shot-cinematic" data-image-reveal>
-          <div class="shot-media">
-            <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319249/sun-was-waiting.webp" alt="Sunlit courtyard at Casa Sol Tardío" width="2400" height="1350" loading="lazy" decoding="async" />
-          </div>
-          <figcaption><span>CAM 03</span><strong>The Sun Was Waiting</strong><em>Afternoon</em></figcaption>
-        </figure>
-
-        <div class="gallery-detail-run">
-          <figure class="gallery-shot shot-detail" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319325/fountain-keeps-time.webp" alt="Fountain detail at Casa Sol Tardío" width="1122" height="1402" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>DETAIL 06</span><strong>The Fountain Keeps Time</strong><em>Texture</em></figcaption>
-          </figure>
-
-          <figure class="gallery-shot shot-detail shot-detail-main" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319300/golden-company.webp" alt="A quiet lifestyle moment in golden light at Casa Sol Tardío" width="1919" height="2400" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>DETAIL 20</span><strong>Golden Company</strong><em>Ritual</em></figcaption>
-          </figure>
-
-          <figure class="gallery-shot shot-detail" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319334/between-the-pages.webp" alt="Editorial reading detail at Casa Sol Tardío" width="1122" height="1402" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>DETAIL 07</span><strong>Between the Pages</strong><em>Still life</em></figcaption>
-          </figure>
-        </div>
-
-        <figure class="gallery-shot shot-wide shot-water" data-image-reveal>
-          <div class="shot-media">
-            <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319258/petals-afloat.webp" alt="Pool and floating petals at Casa Sol Tardío" width="2400" height="1350" loading="lazy" decoding="async" />
-          </div>
-          <figcaption><span>CAM 17</span><strong>Petals Afloat</strong><em>Water</em></figcaption>
-        </figure>
-
-        <div class="gallery-pair pair-life">
-          <figure class="gallery-shot shot-portrait shot-lower" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319308/petals-on-water.webp" alt="Petals on water detail at Casa Sol Tardío" width="1919" height="2400" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>DETAIL 22</span><strong>Petals on Water</strong><em>Detail</em></figcaption>
-          </figure>
-
-          <figure class="gallery-shot shot-portrait shot-narrow" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319293/view-she-carries.webp" alt="A vertical lifestyle view at Casa Sol Tardío" width="1350" height="2400" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>CAM 16</span><strong>The View She Carries</strong><em>Life at Casa</em></figcaption>
-          </figure>
-        </div>
-
-        <div class="gallery-night-intro">
-          <span data-meta-reveal>After the light changes</span>
-          <h3 data-word-reveal>Casa after dusk.</h3>
-        </div>
-
-        <div class="gallery-pair pair-night">
-          <figure class="gallery-shot shot-portrait" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319270/after-lights.webp" alt="Casa Sol Tardío illuminated after dusk" width="1799" height="2400" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>CAM 23</span><strong>After the Lights Come On</strong><em>Night</em></figcaption>
-          </figure>
-
-          <figure class="gallery-shot shot-portrait shot-lower" data-image-reveal>
-            <div class="shot-media">
-              <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319277/moonlit-threshold.webp" alt="Moonlit threshold at Casa Sol Tardío" width="1799" height="2400" loading="lazy" decoding="async" />
-            </div>
-            <figcaption><span>CAM 13</span><strong>Moonlit Threshold</strong><em>Nocturne</em></figcaption>
-          </figure>
-        </div>
-
-        <figure class="gallery-shot shot-finale" data-image-reveal>
-          <div class="shot-media">
-            <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319284/eclipse-witness.webp" alt="Solar eclipse witnessed from Casa Sol Tardío" width="1599" height="2400" loading="lazy" decoding="async" />
-          </div>
-          <div class="shot-finale-copy" aria-hidden="true">
-            <span>One house.</span>
-            <strong>A thousand kinds of light.</strong>
-          </div>
-          <figcaption><span>CAM 29</span><strong>Eclipse Witness</strong><em>Special study</em></figcaption>
-        </figure>
       </div>
     </section>
 
-    <section class="film-section section-pad type-section" id="film" aria-labelledby="film-title" data-motion-section>
-      <div class="ghost-word" aria-hidden="true" data-ghost-word>MOTION</div>
-      <div class="section-heading film-copy">
-        <div>
-          <p class="eyebrow" data-meta-reveal>03 · The Film</p>
-          <h2 id="film-title" data-word-reveal>The house in motion.</h2>
+    <section class="afterworld" id="after">
+      <div class="after-inner">
+        <p class="after-kicker">The day ends. The house remains.</p>
+        <h1 class="after-title">Architecture · Memory · The Road Home</h1>
+        <p class="after-copy">Casa Sol Tardío is not a gallery arranged around images. It is a house experienced through time — from first light, through ritual and stillness, into dusk, moonlight and eclipse.</p>
+        <div class="after-actions">
+          <a href="#top">Begin again</a>
+          <button type="button" data-open-gate>Studio Access</button>
         </div>
-        <p class="section-note" data-copy-reveal>Reserved for the final Casa Sol film.</p>
-      </div>
-      <div class="placeholder-media film-stage" role="img" aria-label="Reserved film player area"><span>Film module reserved</span></div>
-    </section>
-
-    <section class="bts-section section-pad type-section" id="bts" aria-labelledby="bts-title" data-motion-section>
-      <div class="ghost-word ghost-word-right" aria-hidden="true" data-ghost-word>BETWEEN</div>
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow" data-meta-reveal>04 · Behind the House</p>
-          <h2 id="bts-title" data-word-reveal>The moments between takes.</h2>
-        </div>
-        <p class="section-note" data-copy-reveal>A cinematic BTS chapter will live here once the final animations are ready.</p>
-      </div>
-      <div class="bts-grid">
-        <div class="placeholder-frame"><span>BTS film</span></div>
-        <div class="placeholder-frame portrait"><span>BTS stills</span></div>
-      </div>
-    </section>
-
-    <section class="magazine-section section-pad type-section" id="magazine" aria-labelledby="magazine-title" data-reserved-module data-motion-section>
-      <div class="ghost-word" aria-hidden="true" data-ghost-word>ISSUE</div>
-      <div class="magazine-shell">
-        <div class="magazine-copy">
-          <p class="eyebrow" data-meta-reveal>05 · The Issue</p>
-          <h2 id="magazine-title" data-word-reveal>Casa Sol Tardío, in print.</h2>
-          <p data-copy-reveal>The digital editorial issue is already reserved in the site architecture. The finished issue will open here as a full-screen reading experience.</p>
-          <span class="magazine-status" data-meta-reveal>Digital issue module reserved</span>
-        </div>
-        <div class="magazine-cover placeholder-frame portrait" aria-label="Reserved magazine cover area"><span>Official cover</span></div>
-      </div>
-    </section>
-
-    <section class="finale type-section" id="credits" aria-labelledby="credits-title" data-motion-section>
-      <div class="ghost-word ghost-word-center" aria-hidden="true" data-ghost-word>HOME</div>
-      <div class="finale-inner">
-        <p class="eyebrow" data-meta-reveal>Casa Sol Tardío · Mallorca</p>
-        <h2 id="credits-title" data-word-reveal>Architecture · Memory · The Road Home</h2>
-        <p class="credit-line" data-copy-reveal>A visual story by Mohannad Haikal</p>
-        <p class="credit-tools" data-copy-reveal>3ds Max · D5 Render · AI-assisted post-production</p>
-        <a href="#top" data-meta-reveal>Return to the light ↑</a>
+        <p class="after-credits">3ds Max · D5 Render · AI-assisted post-production · Mallorca · 2023—2026</p>
       </div>
     </section>
   </main>
@@ -279,20 +85,20 @@
   <dialog class="gate" data-gate aria-labelledby="gate-title">
     <button class="gate-close" type="button" data-close-gate aria-label="Close">×</button>
     <div class="gate-panel">
-      <p class="eyebrow">Private Presentation</p>
+      <p class="opening-kicker">Private Presentation</p>
       <h2 id="gate-title">Studio Access</h2>
-      <p class="gate-copy">A private presentation built inside Casa Sol Tardío. Access is reserved for invited viewers.</p>
-      <form class="gate-form" data-gate-form>
+      <p>A private presentation built inside Casa Sol Tardío. Access is reserved for invited viewers.</p>
+      <form data-gate-form>
         <label for="studio-password">Password</label>
         <div class="gate-row">
           <input id="studio-password" name="password" type="password" autocomplete="current-password" />
           <button type="submit">Enter</button>
         </div>
-        <p class="gate-note" aria-live="polite">The final villa-door transition will be connected here.</p>
+        <p class="gate-note" aria-live="polite">The villa-door transition will connect here.</p>
       </form>
     </div>
   </dialog>
 
-  <script src="app.js" defer></script>
+  <script src="world.js" defer></script>
 </body>
 </html>
