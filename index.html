@@ -4,101 +4,187 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0b0908" />
-  <meta name="description" content="Casa Sol Tardío — an interactive architectural journey through light, time and memory in Mallorca." />
-  <title>Casa Sol Tardío — Solar Atlas</title>
+  <meta name="description" content="Casa Sol Tardío — a cinematic architectural universe by Mohannad Haikal." />
+  <title>Casa Sol Tardío — Mallorca</title>
   <link rel="icon" type="image/svg+xml" href="public/assets/images/favicon.svg" />
   <link rel="preload" as="image" href="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" />
-  <link rel="preload" as="image" href="https://res.cloudinary.com/vysyrabp/image/upload/v1787319165/first-glimpse.webp" />
-  <link rel="stylesheet" href="world.css" />
+  <link rel="stylesheet" href="house.css" />
 </head>
 <body>
-  <div class="world-loader" data-loader aria-hidden="true">
-    <div class="loader-orbit"><span class="loader-mark">Casa Sol Tardío</span></div>
+  <div class="site-loader" data-loader aria-hidden="true">
+    <span class="loader-mark">Casa Sol Tardío</span>
+    <span class="loader-line"></span>
   </div>
 
-  <aside class="world-ui" aria-label="Casa Solar Atlas navigation">
-    <a class="world-brand" href="#top">Casa Sol Tardío<span>Solar Atlas · Mallorca</span></a>
-    <div class="world-progress" aria-hidden="true"><span></span></div>
-    <div class="sundial" aria-hidden="true">
-      <div class="sundial-time" data-time>06:42<span data-time-phase>Dawn</span></div>
-    </div>
-    <div class="world-chapter" aria-live="polite">
-      <small data-chapter-small>CAM 01 · Arrival</small>
-      <strong data-chapter-strong>The First Glimpse</strong>
-    </div>
+  <header class="site-nav">
+    <a class="brand" href="#top">Casa Sol Tardío</a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#story">Story</a>
+      <a href="#stills">Solar Atlas</a>
+      <a href="#film">Film</a>
+      <a href="#bts">BTS</a>
+      <a href="#magazine">Magazine</a>
+      <button type="button" data-open-gate>Studio Access</button>
+    </nav>
+  </header>
+
+  <aside class="room-index" aria-label="Casa rooms">
+    <a href="#top" data-label="Opening" aria-label="Opening"></a>
+    <a href="#story" data-label="Story" aria-label="Story"></a>
+    <a href="#stills" data-label="Solar Atlas" aria-label="Solar Atlas"></a>
+    <a href="#film" data-label="Film" aria-label="Film"></a>
+    <a href="#bts" data-label="Behind the House" aria-label="Behind the House"></a>
+    <a href="#magazine" data-label="The Issue" aria-label="The Issue"></a>
+    <a href="#access" data-label="Studio Access" aria-label="Studio Access"></a>
   </aside>
 
   <main id="top">
-    <section class="journey" data-journey aria-label="A day inside Casa Sol Tardío">
-      <div class="journey-stage" data-stage>
-        <div class="sky" aria-hidden="true"></div>
-        <div class="haze" aria-hidden="true"></div>
-        <div class="stars" aria-hidden="true"></div>
-        <div class="arch-lines" aria-hidden="true"></div>
+    <section class="hero" data-hero aria-label="Casa Sol Tardío opening film">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp">
+        <source src="public/assets/video/coming-soon.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-meta"><span>Mallorca</span><span>2023—2026</span></div>
+      <div class="hero-center">
+        <p>A cinematic architectural story</p>
+        <img class="hero-logo" src="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" alt="Casa Sol Tardío" />
+        <div class="hero-line"></div>
+        <div class="hero-tagline">Where light lingers, home begins.</div>
+      </div>
+      <a class="hero-scroll" href="#story">Enter the house</a>
+    </section>
 
-        <div class="sun-orbit" aria-hidden="true">
-          <div class="sun" data-sun><div class="moon" data-moon></div></div>
+    <section class="threshold" id="story" data-threshold aria-label="The threshold">
+      <div class="threshold-sticky">
+        <div class="floor-lines" aria-hidden="true"></div>
+        <div class="threshold-sun" aria-hidden="true"></div>
+        <div class="threshold-window" aria-hidden="true">
+          <video autoplay muted loop playsinline preload="metadata" poster="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp">
+            <source src="public/assets/video/coming-soon.mp4" type="video/mp4" />
+          </video>
         </div>
-
-        <div class="shadow-word" data-world-word aria-hidden="true">ARRIVAL</div>
-
-        <div class="opening" data-opening>
-          <div class="opening-inner">
-            <p class="opening-kicker">Mallorca · 2023—2026 · A visual story by Mohannad Haikal</p>
-            <img class="opening-logo" src="public/assets/images/CASA%20SOL%20TARD%C3%8DO_LOGO.png" alt="Casa Sol Tardío" />
-            <div class="opening-line"></div>
-            <p class="opening-copy">Where light lingers, home begins.</p>
-            <div class="scroll-orbit">Scroll</div>
-          </div>
+        <div class="threshold-word" aria-hidden="true">HOUSE</div>
+        <div class="threshold-copy">
+          <small>01 · The House</small>
+          <h2>This is not a page. It is a house.</h2>
+          <p>The website is structured like Casa itself: an opening threshold, a living archive of light, a screening room, a production floor, a reading room, and finally a private door.</p>
         </div>
+      </div>
+    </section>
 
-        <div class="portal-layer" data-portals aria-live="off"></div>
-
-        <div class="scene-quote" data-quote aria-hidden="true">
-          <small>Dawn</small>
-          <strong>The house appears before the day fully does.</strong>
+    <section class="story-room" aria-labelledby="story-title">
+      <div class="story-grid">
+        <div class="story-head">
+          <p class="kicker">Architecture · Memory · The Road Home</p>
+          <h2 class="display" id="story-title">A house made for the slower hours.</h2>
         </div>
+        <div class="story-copy">
+          <p>Casa Sol Tardío is a cinematic architectural study shaped by Mediterranean light, memory, material and the quiet rituals of home.</p>
+          <p>Conceived in 2023 and completed in 2026, the project moves through the villa as a lived story rather than a sequence of isolated renders. Every room, still, film, production moment and printed page belongs to the same world.</p>
+          <figure class="story-image">
+            <img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319237/the-passage.webp" alt="The Passage at Casa Sol Tardío" loading="lazy" decoding="async" />
+          </figure>
+        </div>
+      </div>
+    </section>
 
-        <div class="eclipse-title" data-eclipse-title aria-hidden="true">
-          <div>
-            <small>For one impossible moment</small>
-            <h2>The sun<br />went quiet.</h2>
+    <section class="atlas" id="stills" data-atlas aria-label="Solar Atlas of Casa Sol Tardío renders">
+      <div class="atlas-stage">
+        <div class="atlas-sky" aria-hidden="true"></div>
+        <div class="atlas-stars" aria-hidden="true"></div>
+        <div class="atlas-sun" aria-hidden="true"></div>
+        <div class="atlas-word" data-atlas-word aria-hidden="true">ARRIVAL</div>
+        <div class="atlas-title">
+          <p class="kicker">02 · The Stills</p>
+          <h2>Solar Atlas</h2>
+          <p>Scroll through one day at Casa. The sun, color, atmosphere and architecture move together.</p>
+        </div>
+        <div class="atlas-time"><strong data-atlas-time>06:42</strong><span data-atlas-phase>Dawn</span></div>
+        <div data-atlas-portals></div>
+        <div class="atlas-quote" data-atlas-quote><small>Dawn</small><strong>The house appears before the day fully does.</strong></div>
+        <div class="atlas-counter" data-atlas-count>01 / 15</div>
+        <div class="atlas-eclipse-title" data-atlas-e-title aria-hidden="true"><div><small>For one impossible moment</small><h3>The sun<br />went quiet.</h3></div></div>
+      </div>
+    </section>
+
+    <section class="film-room" id="film" data-film aria-labelledby="film-title">
+      <div class="film-sticky">
+        <div class="cinema-screen">
+          <video autoplay muted loop playsinline preload="metadata" poster="public/assets/images/CASA_SOL_TARDIO_POSTER_LATEST_WEB.webp">
+            <source src="public/assets/video/coming-soon.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="film-copy">
+          <p class="kicker">03 · Screening Room</p>
+          <h2 id="film-title">The Film</h2>
+          <p>This room is built around motion. The current loop acts as the living prelude; the final cinematic cut will occupy the same screen without changing the architecture of the site.</p>
+        </div>
+        <div class="film-side"><span>Room state</span><strong>Prelude</strong></div>
+      </div>
+    </section>
+
+    <section class="bts-room" id="bts" data-bts aria-labelledby="bts-title">
+      <div class="bts-sticky">
+        <div class="bts-heading"><p class="kicker">04 · Production Floor</p><h2 id="bts-title">Behind the House</h2></div>
+        <p class="bts-note">Direction, set-up, mistakes, laughter, light tests, crew and the moments between takes. The BTS chapter has a physical room in the site instead of being an afterthought.</p>
+        <div class="contact-track" aria-label="Behind-the-scenes module shell">
+          <div class="contact-frame wide" data-slot="Direction"><img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319165/first-glimpse.webp" alt="Casa visual reference" loading="lazy" /></div>
+          <div class="contact-frame" data-slot="Light"><img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319300/golden-company.webp" alt="Casa visual reference" loading="lazy" /></div>
+          <div class="contact-frame" data-slot="Set"><img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319221/bougainvillea-courtyard.webp" alt="Casa visual reference" loading="lazy" /></div>
+          <div class="contact-frame wide" data-slot="Between Takes"><img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319270/after-lights.webp" alt="Casa visual reference" loading="lazy" /></div>
+          <div class="contact-frame" data-slot="Crew"><img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319293/view-she-carries.webp" alt="Casa visual reference" loading="lazy" /></div>
+          <div class="contact-frame wide" data-slot="Rolling Credits"><img src="https://res.cloudinary.com/vysyrabp/image/upload/v1787319284/eclipse-witness.webp" alt="Casa visual reference" loading="lazy" /></div>
+        </div>
+        <div class="contact-index">BTS module · ready for final animated material</div>
+      </div>
+    </section>
+
+    <section class="magazine-room" id="magazine" data-magazine aria-labelledby="magazine-title">
+      <div class="magazine-sticky">
+        <div class="mag-copy">
+          <p class="kicker">05 · Reading Room</p>
+          <h2 id="magazine-title">The Issue</h2>
+          <p>Casa also exists in print. The digital magazine lives in its own reading room, with the finished issue designed to open as a full-screen editorial object rather than a PDF link dropped at the bottom of a portfolio.</p>
+          <div class="mag-actions"><span>CST / 001 / 2026</span><i></i><span>Digital + Print</span></div>
+        </div>
+        <div class="magazine-object" aria-label="Casa Sol Tardío magazine module">
+          <div class="mag-cover">
+            <div class="mag-spine" aria-hidden="true"></div>
+            <div class="mag-masthead">CASA<br />SOL TARDÍO</div>
+            <div class="mag-edition">Mallorca · 2023—2026</div>
+            <div class="mag-foot"><span>Issue 001</span><span>Architecture · Memory</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="afterworld" id="after">
-      <div class="after-inner">
-        <p class="after-kicker">The day ends. The house remains.</p>
-        <h1 class="after-title">Architecture · Memory · The Road Home</h1>
-        <p class="after-copy">Casa Sol Tardío is not a gallery arranged around images. It is a house experienced through time — from first light, through ritual and stillness, into dusk, moonlight and eclipse.</p>
-        <div class="after-actions">
-          <a href="#top">Begin again</a>
-          <button type="button" data-open-gate>Studio Access</button>
+    <section class="access-room" id="access" aria-labelledby="access-title">
+      <div class="door">
+        <div class="door-panel" aria-hidden="true"></div>
+        <button class="door-button" type="button" data-open-gate aria-label="Open Studio Access"></button>
+        <div class="door-copy">
+          <p class="kicker">06 · Private Door</p>
+          <h2 id="access-title">Studio Access</h2>
+          <p>The public house ends here. Invited viewers go inside.</p>
         </div>
-        <p class="after-credits">3ds Max · D5 Render · AI-assisted post-production · Mallorca · 2023—2026</p>
       </div>
+      <div class="credits"><span>A visual story by Mohannad Haikal</span><span>3ds Max · D5 Render · AI-assisted post-production</span><span>Mallorca · 2023—2026</span></div>
     </section>
   </main>
 
   <dialog class="gate" data-gate aria-labelledby="gate-title">
     <button class="gate-close" type="button" data-close-gate aria-label="Close">×</button>
     <div class="gate-panel">
-      <p class="opening-kicker">Private Presentation</p>
+      <p class="kicker">Private Presentation</p>
       <h2 id="gate-title">Studio Access</h2>
       <p>A private presentation built inside Casa Sol Tardío. Access is reserved for invited viewers.</p>
       <form data-gate-form>
         <label for="studio-password">Password</label>
-        <div class="gate-row">
-          <input id="studio-password" name="password" type="password" autocomplete="current-password" />
-          <button type="submit">Enter</button>
-        </div>
-        <p class="gate-note" aria-live="polite">The villa-door transition will connect here.</p>
+        <div class="gate-row"><input id="studio-password" name="password" type="password" autocomplete="current-password" /><button type="submit">Enter</button></div>
+        <p class="gate-note" aria-live="polite">The private villa-door experience connects here.</p>
       </form>
     </div>
   </dialog>
 
-  <script src="world.js" defer></script>
+  <script src="house.js" defer></script>
 </body>
 </html>
