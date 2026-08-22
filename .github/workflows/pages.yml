@@ -24,29 +24,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build full-resolution Petals Afloat
-        shell: bash
-        run: |
-          python -m pip install --quiet gdown pillow
-          if gdown "https://drive.google.com/uc?id=125tSJctlZD7C2XgZlN5cbzMfTdOhVyB2" -O /tmp/petals-afloat.jpg; then
-            python - <<'PY'
-          from PIL import Image
-          from pathlib import Path
-          src = Path('/tmp/petals-afloat.jpg')
-          dst = Path('evidence-preview/petals-afloat-hq.webp')
-          im = Image.open(src).convert('RGB')
-          max_w = 2000
-          if im.width > max_w:
-              h = round(im.height * max_w / im.width)
-              im = im.resize((max_w, h), Image.Resampling.LANCZOS)
-          im.save(dst, 'WEBP', quality=92, method=6)
-          print(f'Petals Afloat built: {im.width}x{im.height}, {dst.stat().st_size} bytes')
-          PY
-          else
-            echo "::warning::Could not fetch full-resolution Petals Afloat; preserving fallback asset"
-            cp evidence-preview/petals-afloat-new.webp evidence-preview/petals-afloat-hq.webp
-          fi
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
