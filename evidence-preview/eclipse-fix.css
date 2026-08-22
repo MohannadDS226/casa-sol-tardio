@@ -1,0 +1,10 @@
+.anomaly{background:#000;isolation:isolate}
+.anomaly::after{content:"";position:fixed;inset:0;z-index:3;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 48%,rgba(255,168,74,.035) 0,rgba(0,0,0,0) 30%,rgba(0,0,0,.18) 76%,rgba(0,0,0,.46) 100%);transition:opacity 1.4s ease}
+.anomaly.active::after{opacity:1}
+.anomaly-image{z-index:1;opacity:.72!important;filter:brightness(.34) saturate(.58) contrast(1.06)!important;transform:scale(1.005);transform-origin:center center;transition:filter 1.8s ease,opacity 1.8s ease,transform 8s cubic-bezier(.2,.65,.2,1);will-change:filter,opacity,transform}
+.anomaly.active .anomaly-image{opacity:1!important;filter:brightness(.88) saturate(.82) contrast(1.05)!important;transform:scale(1.035)}
+.ring{display:none!important}
+.anomaly-time{top:auto!important;bottom:7vh!important;left:50%!important;transform:translateX(-50%)!important;z-index:6!important;font-size:9px!important;letter-spacing:.44em!important;text-shadow:0 2px 12px #000;opacity:0!important}
+.anomaly.active .anomaly-time{opacity:.72!important;transition:opacity 1.5s .9s!important}
+.anomaly-before,.anomaly-after{z-index:6!important;text-shadow:0 2px 14px rgba(0,0,0,.8)}
+@media(max-width:700px){.anomaly.active .anomaly-image{filter:brightness(.95) saturate(.84) contrast(1.03)!important;transform:scale(1.02)}.anomaly-time{bottom:5vh!important}}
