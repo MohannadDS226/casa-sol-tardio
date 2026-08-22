@@ -1,0 +1,550 @@
+/* CASA SOL TARDÍO — cinematic experience layer
+   The site should feel less like a portfolio and more like walking through light. */
+
+:root {
+  --casa-glow: rgba(255, 211, 159, .22);
+  --casa-night: #090706;
+}
+
+/* A nearly invisible film edge that turns the whole document into one continuous reel. */
+@media (min-width: 1040px) {
+  html::before {
+    content: "";
+    position: fixed;
+    z-index: 90;
+    left: 1.05rem;
+    top: 15vh;
+    width: 1px;
+    height: 70vh;
+    background: linear-gradient(to bottom, transparent, rgba(243,234,223,.18) 8%, rgba(243,234,223,.18) 92%, transparent);
+    pointer-events: none;
+  }
+
+  html::after {
+    content: "";
+    position: fixed;
+    z-index: 91;
+    left: calc(1.05rem - 3px);
+    top: 15vh;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #f3eadf;
+    box-shadow: 0 0 0 5px rgba(243,234,223,.055), 0 0 22px rgba(255,216,170,.34);
+    pointer-events: none;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 1040px) {
+    html::after {
+      animation: casaReelProgress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  @keyframes casaReelProgress {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(70vh - 7px)); }
+  }
+}
+
+/* HERO — the title exists inside a much larger, almost subliminal Mallorca title card. */
+.hero::before {
+  content: "MALLORCA";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: -0.13em;
+  transform: translateX(-50%);
+  width: max-content;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(7rem, 23vw, 26rem);
+  line-height: .72;
+  letter-spacing: -.075em;
+  color: rgba(255,255,255,.075);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: auto -20vw -28vh;
+  height: 58vh;
+  background: radial-gradient(ellipse at 50% 100%, rgba(221,141,78,.22), transparent 62%);
+  filter: blur(24px);
+  pointer-events: none;
+}
+
+/* THE HOUSE — a sunlit editorial field rather than a flat cream page. */
+.chapter {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.chapter::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: min(76vw, 74rem);
+  aspect-ratio: 1;
+  right: -24vw;
+  top: -36vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,214,157,.43) 0%, rgba(255,214,157,.14) 34%, transparent 69%);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+@media (min-width: 900px) {
+  .chapter-grid h2 {
+    position: sticky;
+    top: 23vh;
+  }
+}
+
+/* STILLS — every frame floats by a few pixels like a slow dolly move. */
+.gallery-shot .shot-media {
+  box-shadow: 0 2.2rem 6rem rgba(0,0,0,.12);
+}
+
+.gallery-shot figcaption strong {
+  text-shadow: 0 0 1px rgba(243,234,223,.08);
+}
+
+@supports (animation-timeline: view()) {
+  .gallery-shot {
+    view-timeline-name: --casa-shot;
+    view-timeline-axis: block;
+  }
+
+  .gallery-shot.is-visible .shot-media img {
+    animation: casaImageDrift linear both;
+    animation-timeline: --casa-shot;
+    animation-range: entry -10% exit 110%;
+    transition: filter .7s ease;
+  }
+
+  @keyframes casaImageDrift {
+    0% { transform: translate3d(0, 2.2%, 0) scale(1.055); }
+    50% { transform: translate3d(0, 0, 0) scale(1.035); }
+    100% { transform: translate3d(0, -2.2%, 0) scale(1.055); }
+  }
+
+  .gallery-essay {
+    view-timeline-name: --essay;
+    view-timeline-axis: block;
+  }
+
+  .gallery-essay strong {
+    animation: casaEssayBreath linear both;
+    animation-timeline: --essay;
+    animation-range: entry 0% exit 100%;
+  }
+
+  @keyframes casaEssayBreath {
+    from { transform: translateX(9vw); letter-spacing: -.075em; opacity: .18; }
+    48% { transform: translateX(0); letter-spacing: -.055em; opacity: 1; }
+    to { transform: translateX(-5vw); letter-spacing: -.04em; opacity: .25; }
+  }
+}
+
+/* DAY → NIGHT — this becomes a full chapter transition, not another heading. */
+.gallery-night-intro {
+  min-height: 138svh;
+  position: relative;
+  display: grid;
+  align-content: start;
+  border-top: 0;
+  padding-top: 0;
+  isolation: isolate;
+}
+
+.gallery-night-intro::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -20vh -15vw;
+  background:
+    radial-gradient(circle at 70% 38%, rgba(148,109,99,.18), transparent 34%),
+    radial-gradient(circle at 28% 62%, rgba(35,56,83,.22), transparent 40%);
+  filter: blur(26px);
+  pointer-events: none;
+}
+
+.gallery-night-intro > span {
+  position: sticky;
+  top: 23vh;
+  width: max-content;
+}
+
+.gallery-night-intro h3 {
+  position: sticky;
+  top: 39vh;
+  max-width: 7.5ch;
+  text-wrap: balance;
+  text-shadow: 0 1rem 4rem rgba(0,0,0,.25);
+}
+
+@supports (animation-timeline: view()) {
+  .gallery-night-intro {
+    view-timeline-name: --night-title;
+  }
+
+  .gallery-night-intro h3 {
+    animation: casaNightTitle linear both;
+    animation-timeline: --night-title;
+    animation-range: entry 8% exit 92%;
+  }
+
+  @keyframes casaNightTitle {
+    0% { transform: translate3d(-7vw, 0, 0) scale(.86); opacity: .05; filter: blur(8px); }
+    38% { transform: translate3d(0,0,0) scale(1); opacity: 1; filter: blur(0); }
+    66% { transform: translate3d(0,0,0) scale(1); opacity: 1; filter: blur(0); }
+    100% { transform: translate3d(7vw,-2vh,0) scale(1.06); opacity: 0; filter: blur(5px); }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* THE ECLIPSE PORTAL                                                         */
+/* CAM29 stops being a final gallery card and becomes a 2.6-screen experience. */
+/* -------------------------------------------------------------------------- */
+
+.shot-finale {
+  position: relative;
+  isolation: isolate;
+  width: calc(100% + (var(--pad) * 2));
+  max-width: none;
+  height: 260svh;
+  margin: clamp(12rem, 19vw, 21rem) 0 0 calc(var(--pad) * -1);
+  background: #050403;
+  overflow: clip;
+  view-timeline-name: --eclipse;
+  view-timeline-axis: block;
+}
+
+.shot-finale .shot-media {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  aspect-ratio: auto;
+  clip-path: none;
+  background: #050403;
+  box-shadow: none;
+}
+
+.shot-finale .shot-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 44%;
+  transform: scale(1.14);
+  filter: brightness(.34) saturate(.7) contrast(1.08);
+}
+
+.shot-finale .shot-media::after {
+  z-index: 3;
+  opacity: 1;
+  background:
+    radial-gradient(circle at 50% 42%, transparent 0 6%, rgba(255,184,106,.14) 7%, transparent 16%),
+    linear-gradient(180deg, rgba(3,2,2,.1), rgba(3,2,2,.2) 58%, rgba(3,2,2,.78));
+}
+
+.shot-finale-copy {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  left: auto;
+  width: 100%;
+  height: 100svh;
+  margin-top: -100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.shot-finale-copy::before,
+.shot-finale-copy::after,
+.shot-finale-copy > span,
+.shot-finale-copy > strong {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(86vw, 16ch);
+  margin: 0;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+}
+
+.shot-finale-copy::before {
+  content: "ALL DAY, THE HOUSE FOLLOWED THE SUN.";
+  font-size: clamp(.7rem, 1.1vw, .9rem);
+  line-height: 1.5;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(243,234,223,.82);
+}
+
+.shot-finale-copy::after {
+  content: "THEN THE SKY CHANGED.";
+  width: min(86vw, 10ch);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.4rem, 9vw, 10rem);
+  line-height: .82;
+  letter-spacing: -.065em;
+  color: var(--cream);
+  text-shadow: 0 1rem 5rem rgba(0,0,0,.45);
+}
+
+.shot-finale-copy > span {
+  width: auto;
+  font-size: .63rem;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: rgba(243,234,223,.65);
+}
+
+.shot-finale-copy > strong {
+  width: min(88vw, 11ch);
+  font-size: clamp(3.8rem, 10vw, 11rem);
+  line-height: .8;
+  letter-spacing: -.065em;
+  color: var(--cream);
+  text-shadow: 0 1rem 5rem rgba(0,0,0,.48);
+}
+
+.shot-finale figcaption {
+  position: absolute;
+  z-index: 7;
+  left: var(--pad);
+  right: var(--pad);
+  bottom: 1.6rem;
+  margin: 0;
+  padding: 0;
+  color: var(--cream);
+}
+
+@supports (animation-timeline: view()) {
+  .shot-finale .shot-media img {
+    animation: casaEclipseImage linear both;
+    animation-timeline: --eclipse;
+    animation-range: entry 0% exit 100%;
+  }
+
+  .shot-finale .shot-media::after {
+    animation: casaEclipseAtmosphere linear both;
+    animation-timeline: --eclipse;
+    animation-range: entry 0% exit 100%;
+  }
+
+  .shot-finale-copy::before {
+    animation: eclipseLineOne linear both;
+    animation-timeline: --eclipse;
+    animation-range: entry 0% exit 100%;
+  }
+
+  .shot-finale-copy::after {
+    animation: eclipseLineTwo linear both;
+    animation-timeline: --eclipse;
+    animation-range: entry 0% exit 100%;
+  }
+
+  .shot-finale-copy > span {
+    animation: eclipseLineThree linear both;
+    animation-timeline: --eclipse;
+    animation-range: entry 0% exit 100%;
+  }
+
+  .shot-finale-copy > strong {
+    animation: eclipseFinalLine linear both;
+    animation-timeline: --eclipse;
+    animation-range: entry 0% exit 100%;
+  }
+
+  .shot-finale figcaption {
+    animation: eclipseCaption linear both;
+    animation-timeline: --eclipse;
+    animation-range: entry 0% exit 100%;
+  }
+
+  @keyframes casaEclipseImage {
+    0% { transform: scale(1.2); filter: brightness(.08) saturate(.45) contrast(1.15); clip-path: circle(2% at 50% 42%); }
+    22% { transform: scale(1.16); filter: brightness(.18) saturate(.55) contrast(1.12); clip-path: circle(8% at 50% 42%); }
+    44% { transform: scale(1.11); filter: brightness(.5) saturate(.72) contrast(1.1); clip-path: circle(42% at 50% 42%); }
+    62% { transform: scale(1.07); filter: brightness(.86) saturate(.9) contrast(1.05); clip-path: circle(78% at 50% 42%); }
+    80% { transform: scale(1.035); filter: brightness(1) saturate(.98) contrast(1.02); clip-path: circle(120% at 50% 42%); }
+    100% { transform: scale(1.015); filter: brightness(.82) saturate(.86) contrast(1.06); clip-path: circle(140% at 50% 42%); }
+  }
+
+  @keyframes casaEclipseAtmosphere {
+    0%, 18% { opacity: 1; background: radial-gradient(circle at 50% 42%, rgba(255,235,196,.98) 0 1%, rgba(255,174,92,.75) 1.5% 3%, rgba(255,148,58,.18) 5%, transparent 16%), linear-gradient(#050403,#050403); }
+    38% { opacity: .94; }
+    60% { opacity: .66; background: radial-gradient(circle at 50% 42%, transparent 0 5%, rgba(255,181,98,.18) 6%, transparent 17%), linear-gradient(180deg, rgba(3,2,2,.14), rgba(3,2,2,.62)); }
+    100% { opacity: 1; background: linear-gradient(180deg, rgba(3,2,2,.12), rgba(3,2,2,.22) 55%, rgba(3,2,2,.82)); }
+  }
+
+  @keyframes eclipseLineOne {
+    0%, 6% { opacity: 0; transform: translate(-50%,-34%) scale(.96); filter: blur(6px); }
+    13%, 24% { opacity: 1; transform: translate(-50%,-50%) scale(1); filter: blur(0); }
+    31%, 100% { opacity: 0; transform: translate(-50%,-66%) scale(1.02); filter: blur(3px); }
+  }
+
+  @keyframes eclipseLineTwo {
+    0%, 28% { opacity: 0; transform: translate(-50%,-40%) scale(.9); filter: blur(8px); }
+    38%, 49% { opacity: 1; transform: translate(-50%,-50%) scale(1); filter: blur(0); }
+    57%, 100% { opacity: 0; transform: translate(-50%,-62%) scale(1.04); filter: blur(4px); }
+  }
+
+  @keyframes eclipseLineThree {
+    0%, 54% { opacity: 0; transform: translate(-50%,-25%); }
+    62%, 70% { opacity: .75; transform: translate(-50%,-50%); }
+    76%, 100% { opacity: 0; transform: translate(-50%,-74%); }
+  }
+
+  @keyframes eclipseFinalLine {
+    0%, 66% { opacity: 0; transform: translate(-50%,-37%) scale(.9); filter: blur(10px); }
+    76%, 91% { opacity: 1; transform: translate(-50%,-50%) scale(1); filter: blur(0); }
+    100% { opacity: .12; transform: translate(-50%,-57%) scale(1.04); filter: blur(2px); }
+  }
+
+  @keyframes eclipseCaption {
+    0%, 82% { opacity: 0; transform: translateY(12px); }
+    91%, 100% { opacity: .9; transform: translateY(0); }
+  }
+}
+
+/* The transition out of the eclipse should feel like walking into a black cinema. */
+#film {
+  position: relative;
+  z-index: 2;
+  margin-top: -1px;
+  box-shadow: 0 -18vh 34vh rgba(5,4,3,.96);
+}
+
+#film::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(243,234,223,.22), transparent);
+}
+
+/* Small tactile upgrades that make the static chapters feel authored. */
+.section-heading h2,
+.chapter-grid h2,
+.gallery-night-intro h3 {
+  text-wrap: balance;
+}
+
+.studio-access {
+  position: relative;
+  overflow: hidden;
+}
+
+.studio-access::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(100deg, transparent 18%, rgba(255,255,255,.22), transparent 58%);
+  transform: translateX(-120%);
+  transition: transform .75s var(--ease);
+  pointer-events: none;
+}
+
+.studio-access:hover::before,
+.studio-access:focus-visible::before {
+  transform: translateX(120%);
+}
+
+@media (max-width: 760px) {
+  .hero::before {
+    font-size: clamp(6rem, 31vw, 12rem);
+    bottom: -.05em;
+  }
+
+  .gallery-night-intro {
+    min-height: 112svh;
+  }
+
+  .gallery-night-intro > span { top: 20vh; }
+  .gallery-night-intro h3 { top: 34vh; }
+
+  .shot-finale {
+    width: calc(100% + 2rem);
+    height: 210svh;
+    margin-left: -1rem;
+    margin-top: 10rem;
+  }
+
+  .shot-finale .shot-media img {
+    object-position: center 42%;
+  }
+
+  .shot-finale-copy::before {
+    width: 78vw;
+    font-size: .59rem;
+    line-height: 1.6;
+  }
+
+  .shot-finale-copy::after {
+    font-size: clamp(3rem, 17vw, 6rem);
+  }
+
+  .shot-finale-copy > strong {
+    font-size: clamp(3.5rem, 17vw, 6.5rem);
+    width: 88vw;
+  }
+
+  .shot-finale figcaption {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html::after,
+  .gallery-shot.is-visible .shot-media img,
+  .gallery-essay strong,
+  .gallery-night-intro h3,
+  .shot-finale .shot-media img,
+  .shot-finale .shot-media::after,
+  .shot-finale-copy::before,
+  .shot-finale-copy::after,
+  .shot-finale-copy > span,
+  .shot-finale-copy > strong,
+  .shot-finale figcaption {
+    animation: none !important;
+  }
+
+  .shot-finale {
+    height: 100svh;
+  }
+
+  .shot-finale .shot-media img {
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+
+  .shot-finale-copy::before,
+  .shot-finale-copy::after,
+  .shot-finale-copy > span {
+    display: none;
+  }
+
+  .shot-finale-copy > strong {
+    opacity: 1;
+    transform: translate(-50%,-50%);
+    filter: none;
+  }
+}
