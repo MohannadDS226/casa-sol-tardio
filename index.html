@@ -9,6 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="public/assets/images/favicon.svg" />
   <link rel="stylesheet" href="evidence-preview/evidence.css?v=1" />
   <link rel="stylesheet" href="evidence-preview/eclipse-fix.css?v=20260822a" />
+  <link rel="stylesheet" href="evidence-preview/studio-access.css?v=20260822a" />
 </head>
 <body>
   <div class="boot" data-boot aria-hidden="true"><div class="boot-id">CASE CST / 001 / 2026</div><div class="boot-line"><i></i></div></div>
@@ -162,7 +163,25 @@
     </footer>
   </main>
 
+  <dialog class="studio-gate" data-studio-gate aria-labelledby="studio-gate-title">
+    <div class="studio-gate-panel">
+      <button class="studio-gate-close" type="button" data-studio-close aria-label="Close">×</button>
+      <p class="studio-gate-kicker">PRIVATE PRESENTATION</p>
+      <h2 id="studio-gate-title">Studio Access</h2>
+      <p class="studio-gate-copy">The public archive ends here. The private presentation sits behind the last door of Casa.</p>
+      <form class="studio-gate-form" data-studio-form>
+        <label for="studio-password">Access key</label>
+        <div class="studio-gate-row">
+          <input id="studio-password" name="password" type="password" autocomplete="current-password" />
+          <button type="submit">Enter</button>
+        </div>
+        <p class="studio-gate-note" data-studio-note aria-live="polite"></p>
+      </form>
+    </div>
+  </dialog>
+
   <div class="flash" aria-hidden="true"></div>
   <script src="evidence-preview/evidence.js?v=1" defer></script>
+  <script src="evidence-preview/studio-access.js?v=20260822a" defer></script>
 </body>
 </html>
