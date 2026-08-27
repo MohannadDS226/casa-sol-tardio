@@ -225,3 +225,27 @@ if (siennaInterlude && !reducedMotion) {
   addEventListener('resize', updateSiennaParallax, { passive: true });
   updateSiennaParallax();
 }
+
+
+const siteLoader = document.querySelector('.site-loader');
+const loaderStartedAt = performance.now();
+let loaderReleased = false;
+
+function releaseSiteLoader() {
+  if (loaderReleased) return;
+  loaderReleased = true;
+  document.documentElement.classList.remove('loading');
+  document.documentElement.classList.add('site-ready');
+  if (!siteLoader) return;
+  siteLoader.classList.add('is-leaving');
+  window.setTimeout(() => siteLoader.remove(), 980);
+}
+
+function scheduleSiteReveal() {
+  const minimumDisplay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 120 : 1320;
+  window.setTimeout(releaseSiteLoader, Math.max(0, minimumDisplay - (performance.now() - loaderStartedAt)));
+}
+
+if (document.readyState === 'complete') scheduleSiteReveal();
+else window.addEventListener('load', scheduleSiteReveal, { once: true });
+window.setTimeout(releaseSiteLoader, 3200);
