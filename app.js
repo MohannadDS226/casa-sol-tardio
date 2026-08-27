@@ -124,3 +124,87 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
+
+const lightboxItems = [...document.querySelectorAll('.media-placeholder.has-image img')];
+if (lightboxItems.length) {
+  const lightbox = document.createElement('div');
+  lightbox.className = 'image-lightbox';
+  lightbox.setAttribute('role', 'dialog');
+  lightbox.setAttribute('aria-modal', 'true');
+  lightbox.setAttribute('aria-label', 'Image viewer');
+  lightbox.setAttribute('aria-hidden', 'true');
+  lightbox.innerHTML = `
+    <button class="lightbox-close" type="button" aria-label="Close image viewer">Close <span>×</span></button>
+    <button class="lightbox-arrow lightbox-prev" type="button" aria-label="Previous image">←</button>
+    <figure>
+      <img alt="">
+      <figcaption></figcaption>
+    </figure>
+    <button class="lightbox-arrow lightbox-next" type="button" aria-label="Next image">→</button>
+    <span class="lightbox-count" aria-live="polite"></span>
+  `;
+  document.body.appendChild(lightbox);
+
+  const lightboxImage = lightbox.querySelector('figure img');
+  const lightboxCaption = lightbox.querySelector('figcaption');
+  const lightboxCount = lightbox.querySelector('.lightbox-count');
+  const closeButton = lightbox.querySelector('.lightbox-close');
+  let activeIndex = 0;
+  let returnFocus = null;
+
+  function showImage(index) {
+    activeIndex = (index + lightboxItems.length) % lightboxItems.length;
+    const source = lightboxItems[activeIndex];
+    const authoredCaption = source.closest('figure')?.querySelector(':scope > figcaption')?.textContent.trim();
+    lightboxImage.src = source.currentSrc || source.src;
+    lightboxImage.alt = source.alt;
+    lightboxCaption.textContent = authoredCaption || source.alt;
+    lightboxCount.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(lightboxItems.length).padStart(2, '0')}`;
+  }
+
+  function openLightbox(index, trigger) {
+    returnFocus = trigger;
+    showImage(index);
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lightbox-open');
+    mediaCursor?.classList.remove('active');
+    requestAnimationFrame(() => closeButton.focus({ preventScroll: true }));
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lightbox-open');
+    lightboxImage.removeAttribute('src');
+    returnFocus?.focus?.({ preventScroll: true });
+  }
+
+  lightboxItems.forEach((image, index) => {
+    const trigger = image.closest('.media-placeholder');
+    trigger.tabIndex = 0;
+    trigger.setAttribute('role', 'button');
+    trigger.setAttribute('aria-label', `View full screen: ${image.alt}`);
+    trigger.addEventListener('click', () => openLightbox(index, trigger));
+    trigger.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLightbox(index, trigger);
+      }
+    });
+  });
+
+  closeButton.addEventListener('click', closeLightbox);
+  lightbox.querySelector('.lightbox-prev').addEventListener('click', () => showImage(activeIndex - 1));
+  lightbox.querySelector('.lightbox-next').addEventListener('click', () => showImage(activeIndex + 1));
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (event.key === 'Escape') closeLightbox();
+    if (event.key === 'ArrowLeft') showImage(activeIndex - 1);
+    if (event.key === 'ArrowRight') showImage(activeIndex + 1);
+  });
+}
