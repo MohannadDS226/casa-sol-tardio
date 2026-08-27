@@ -51,3 +51,11 @@ body.lightbox-open{overflow:hidden}.media-placeholder.has-image{cursor:none}.med
 /* Keep the sticky editorial frame intact throughout its scroll range */
 .sienna-interlude{height:145svh;min-height:960px;overflow:visible}.sienna-stage{overflow:clip}.sienna-cutout{bottom:0;width:min(62vw,1000px);max-height:94svh}
 @media(max-width:800px){.sienna-interlude{height:130svh;min-height:820px}.sienna-cutout{bottom:0;width:min(108vw,660px);max-height:91svh}}
+
+
+/* Mediterranean light orbit */
+.sienna-light-loop{position:absolute;z-index:.5;left:-3vw;top:23vh;width:96vw;height:auto;overflow:visible;pointer-events:none;transform:rotate(-16deg);transform-origin:center;filter:drop-shadow(0 0 11px rgba(255,214,158,.25))}.sienna-light-loop ellipse{fill:none;vector-effect:non-scaling-stroke}.loop-base{stroke:rgba(255,231,195,.13);stroke-width:1}.loop-shimmer{stroke:url(#sienna-loop-glow);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:13 87;animation:loopTravel 10s linear infinite}.sienna-light{animation:lightCatch 10s ease-in-out infinite}
+@keyframes loopTravel{to{stroke-dashoffset:-100}}
+@keyframes lightCatch{0%,25%,55%,100%{text-shadow:0 0 0 rgba(255,226,179,0)}38%{text-shadow:0 0 34px rgba(255,226,179,.48);color:#fff7e8}}
+@media(max-width:800px){.sienna-light-loop{left:-28vw;top:29vh;width:150vw;transform:rotate(-22deg)}}
+@media(prefers-reduced-motion:reduce){.loop-shimmer,.sienna-light{animation:none}.loop-shimmer{stroke-dasharray:18 82;opacity:.62}}
