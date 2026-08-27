@@ -208,3 +208,20 @@ if (lightboxItems.length) {
     if (event.key === 'ArrowRight') showImage(activeIndex + 1);
   });
 }
+
+
+const siennaInterlude = document.querySelector('.sienna-interlude');
+if (siennaInterlude && !reducedMotion) {
+  function updateSiennaParallax() {
+    const rect = siennaInterlude.getBoundingClientRect();
+    const travel = innerHeight + rect.height;
+    const position = Math.max(0, Math.min(1, (innerHeight - rect.top) / travel));
+    const y = 9 - position * 20;
+    const tilt = 1.8 - position * 3.2;
+    siennaInterlude.style.setProperty('--sienna-y', `${y}vh`);
+    siennaInterlude.style.setProperty('--sienna-tilt', `${tilt}deg`);
+  }
+  addEventListener('scroll', updateSiennaParallax, { passive: true });
+  addEventListener('resize', updateSiennaParallax, { passive: true });
+  updateSiennaParallax();
+}
