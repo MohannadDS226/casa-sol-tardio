@@ -46,3 +46,8 @@ body.lightbox-open{overflow:hidden}.media-placeholder.has-image{cursor:none}.med
 /* Sienna composition refinement: sticky, larger, and type-safe */
 .sienna-interlude{height:165svh;min-height:1100px}.sienna-stage{position:sticky;top:0;height:100svh;min-height:680px;overflow:hidden;isolation:isolate}.sienna-type{line-height:.78}.sienna-type-back{display:block;inset:0;padding:0;font-size:clamp(105px,14vw,220px)}.sienna-type-back span{position:absolute;display:block}.sienna-type-back .sienna-where{top:12vh;left:4vw}.sienna-type-back .sienna-light{top:39vh;right:4vw;font-style:italic}.sienna-cutout{right:2vw;bottom:-7vh;width:min(68vw,1080px);max-height:116svh}.sienna-type-front{left:4vw;bottom:5vh;font-size:clamp(110px,15.5vw,245px)}.sienna-label{top:7vh}.sienna-caption{top:auto;bottom:8vh}
 @media(max-width:800px){.sienna-interlude{height:145svh;min-height:900px}.sienna-stage{min-height:640px}.sienna-type-back{padding:0;font-size:24vw}.sienna-type-back .sienna-where{top:13vh;left:18px}.sienna-type-back .sienna-light{top:36vh;right:18px}.sienna-cutout{right:50%;bottom:-2vh;width:min(118vw,700px);max-height:96svh}.sienna-type-front{left:18px;bottom:5vh;font-size:22vw}.sienna-caption{display:none}}
+
+
+/* Keep the sticky editorial frame intact throughout its scroll range */
+.sienna-interlude{height:145svh;min-height:960px;overflow:visible}.sienna-stage{overflow:clip}.sienna-cutout{bottom:0;width:min(62vw,1000px);max-height:94svh}
+@media(max-width:800px){.sienna-interlude{height:130svh;min-height:820px}.sienna-cutout{bottom:0;width:min(108vw,660px);max-height:91svh}}
