@@ -12,6 +12,52 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 reveals.forEach((element) => revealObserver.observe(element));
 
+const typeTargets = document.querySelectorAll('h1, h2, .quote-band p');
+typeTargets.forEach((target) => {
+  const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  while (walker.nextNode()) {
+    if (walker.currentNode.textContent.trim()) textNodes.push(walker.currentNode);
+  }
+  let wordIndex = 0;
+  textNodes.forEach((node) => {
+    const fragment = document.createDocumentFragment();
+    node.textContent.split(/(\s+)/).forEach((part) => {
+      if (/^\s+$/.test(part)) {
+        fragment.appendChild(document.createTextNode(part));
+        return;
+      }
+      const mask = document.createElement('span');
+      const inner = document.createElement('span');
+      mask.className = 'word-mask';
+      inner.className = 'word-inner';
+      inner.style.transitionDelay = `${Math.min(wordIndex * 55, 440)}ms`;
+      inner.textContent = part;
+      mask.appendChild(inner);
+      fragment.appendChild(mask);
+      wordIndex += 1;
+    });
+    node.replaceWith(fragment);
+  });
+});
+
+const typeObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('type-visible');
+    typeObserver.unobserve(entry.target);
+  });
+}, { threshold: 0.18 });
+typeTargets.forEach((target) => typeObserver.observe(target));
+
+const locationSection = document.querySelector('.location-section');
+const locationObserver = new IntersectionObserver(([entry]) => {
+  if (!entry.isIntersecting) return;
+  locationSection.classList.add('active');
+  locationObserver.disconnect();
+}, { threshold: 0.22 });
+locationObserver.observe(locationSection);
+
 function updateProgress() {
   const max = document.documentElement.scrollHeight - innerHeight;
   const value = max > 0 ? scrollY / max : 0;
