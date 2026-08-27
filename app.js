@@ -58,6 +58,37 @@ const locationObserver = new IntersectionObserver(([entry]) => {
 }, { threshold: 0.22 });
 locationObserver.observe(locationSection);
 
+const metrics = document.querySelector('.house-metrics');
+const counters = metrics.querySelectorAll('[data-count]');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function animateCounter(element, delay) {
+  const finalValue = Number(element.dataset.count);
+  if (reducedMotion) {
+    element.textContent = finalValue.toLocaleString('en-US');
+    return;
+  }
+  setTimeout(() => {
+    const duration = 1550;
+    const start = performance.now();
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 4);
+      element.textContent = Math.round(finalValue * eased).toLocaleString('en-US');
+      if (progress < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }, delay);
+}
+
+const metricsObserver = new IntersectionObserver(([entry]) => {
+  if (!entry.isIntersecting) return;
+  metrics.classList.add('active');
+  counters.forEach((counter, index) => animateCounter(counter, index * 110));
+  metricsObserver.disconnect();
+}, { threshold: 0.35 });
+metricsObserver.observe(metrics);
+
 function updateProgress() {
   const max = document.documentElement.scrollHeight - innerHeight;
   const value = max > 0 ? scrollY / max : 0;
