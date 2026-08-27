@@ -216,8 +216,8 @@ if (siennaInterlude && !reducedMotion) {
     const rect = siennaInterlude.getBoundingClientRect();
     const travel = innerHeight + rect.height;
     const position = Math.max(0, Math.min(1, (innerHeight - rect.top) / travel));
-    const y = 9 - position * 20;
-    const tilt = 1.8 - position * 3.2;
+    const y = 2.5 - position * 5;
+    const tilt = .8 - position * 1.6;
     siennaInterlude.style.setProperty('--sienna-y', `${y}vh`);
     siennaInterlude.style.setProperty('--sienna-tilt', `${tilt}deg`);
   }
