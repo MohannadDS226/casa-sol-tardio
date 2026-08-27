@@ -89,6 +89,18 @@ const metricsObserver = new IntersectionObserver(([entry]) => {
 }, { threshold: 0.35 });
 metricsObserver.observe(metrics);
 
+const mediaCursor = document.querySelector('.media-cursor');
+if (matchMedia('(pointer: fine)').matches) {
+  document.querySelectorAll('.media-placeholder').forEach((media) => {
+    media.addEventListener('pointerenter', () => mediaCursor.classList.add('active'));
+    media.addEventListener('pointerleave', () => mediaCursor.classList.remove('active'));
+  });
+  addEventListener('pointermove', (event) => {
+    mediaCursor.style.setProperty('--cursor-x', `${event.clientX}px`);
+    mediaCursor.style.setProperty('--cursor-y', `${event.clientY}px`);
+  }, { passive: true });
+}
+
 function updateProgress() {
   const max = document.documentElement.scrollHeight - innerHeight;
   const value = max > 0 ? scrollY / max : 0;

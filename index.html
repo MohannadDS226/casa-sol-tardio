@@ -97,7 +97,20 @@
       </div>
     </section>
 
-    <section class="chapter chapter-arrival">
+    <section class="journey-index" aria-labelledby="journey-title">
+      <header class="journey-heading reveal">
+        <span>Explore the house</span>
+        <h2 id="journey-title">One home.<br><em>Four movements.</em></h2>
+      </header>
+      <nav class="journey-list" aria-label="Casa story chapters">
+        <a href="#arrival" class="journey-row reveal"><span class="journey-number">01</span><strong>Arrival</strong><small>First sight · architecture · approach</small><i>↘</i><span class="journey-swatch arrival-swatch"></span></a>
+        <a href="#stills" class="journey-row reveal"><span class="journey-number">02</span><strong>Immersion</strong><small>Interiors · landscape · human traces</small><i>↘</i><span class="journey-swatch immersion-swatch"></span></a>
+        <a href="#afterglow" class="journey-row reveal"><span class="journey-number">03</span><strong>Afterglow</strong><small>Blue hour · water · illuminated stone</small><i>↘</i><span class="journey-swatch afterglow-swatch"></span></a>
+        <a href="#eclipse" class="journey-row reveal"><span class="journey-number">04</span><strong>Eclipse Witness</strong><small>Milky Way · final light · memory</small><i>↘</i><span class="journey-swatch eclipse-swatch"></span></a>
+      </nav>
+    </section>
+
+    <section class="chapter chapter-arrival" id="arrival">
       <div class="chapter-title reveal">
         <span>Act I</span>
         <h2>The Arrival</h2>
@@ -144,7 +157,7 @@
       </button>
     </section>
 
-    <section class="afterglow">
+    <section class="afterglow" id="afterglow">
       <div class="section-number">III / Afterglow</div>
       <div class="night-grid">
         <div class="media-placeholder night-main reveal" data-slot="BLUE HOUR / ILLUMINATED COURTYARD"><span>09</span></div>
@@ -177,7 +190,7 @@
       <p class="issue-status">The full digital issue will open here when the final edit is ready.</p>
     </section>
 
-    <section class="eclipse-ending">
+    <section class="eclipse-ending" id="eclipse">
       <div class="stars" aria-hidden="true"></div>
       <div class="ending-copy reveal">
         <p>Where the sun lingers</p>
@@ -196,6 +209,7 @@
     <div><span>Project</span><strong>Mallorca · 2023—2026</strong></div>
     <a href="https://www.instagram.com/mohannad.visuals/" target="_blank" rel="noreferrer">Instagram ↗</a>
   </footer>
+  <div class="media-cursor" aria-hidden="true"><span>View</span></div>
   <script src="app.js"></script>
 </body>
 </html>
