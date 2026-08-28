@@ -1,6 +1,23 @@
 const progress = document.querySelector('.progress span');
 const reveals = document.querySelectorAll('.reveal');
 
+const menuToggle = document.querySelector('.menu-toggle');
+const mobileMenu = document.querySelector('.mobile-menu');
+let menuReturnFocus = null;
+
+function setMenu(open) {
+  if (!menuToggle || !mobileMenu) return;
+  menuReturnFocus = open ? document.activeElement : menuReturnFocus;
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  mobileMenu.setAttribute('aria-hidden', String(!open));
+  document.body.classList.toggle('menu-open', open);
+  if (!open) menuReturnFocus?.focus?.({ preventScroll: true });
+}
+
+menuToggle?.addEventListener('click', () => setMenu(menuToggle.getAttribute('aria-expanded') !== 'true'));
+mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -164,6 +181,8 @@ if (lightboxItems.length) {
   const closeButton = lightbox.querySelector('.lightbox-close');
   let activeIndex = 0;
   let returnFocus = null;
+  let touchStartX = 0;
+  let touchStartY = 0;
 
   function showImage(index) {
     activeIndex = (index + lightboxItems.length) % lightboxItems.length;
@@ -219,13 +238,32 @@ if (lightboxItems.length) {
   lightbox.addEventListener('click', (event) => {
     if (event.target === lightbox) closeLightbox();
   });
+  lightbox.addEventListener('touchstart', (event) => {
+    touchStartX = event.changedTouches[0].clientX;
+    touchStartY = event.changedTouches[0].clientY;
+  }, { passive: true });
+  lightbox.addEventListener('touchend', (event) => {
+    const deltaX = event.changedTouches[0].clientX - touchStartX;
+    const deltaY = event.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
+    showImage(activeIndex + (deltaX < 0 ? 1 : -1));
+  }, { passive: true });
   document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.body.classList.contains('menu-open')) setMenu(false);
     if (!lightbox.classList.contains('is-open')) return;
     if (event.key === 'Escape') closeLightbox();
     if (event.key === 'ArrowLeft') showImage(activeIndex - 1);
     if (event.key === 'ArrowRight') showImage(activeIndex + 1);
   });
 }
+
+document.addEventListener('visibilitychange', () => {
+  document.body.classList.toggle('page-hidden', document.hidden);
+});
+
+document.querySelectorAll('.media-placeholder.has-image img').forEach((image) => {
+  image.addEventListener('error', () => image.closest('.media-placeholder')?.classList.add('image-failed'));
+});
 
 const completeCollection = document.querySelector('.complete-collection');
 if (completeCollection && !reducedMotion) {
