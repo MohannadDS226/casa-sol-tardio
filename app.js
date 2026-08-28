@@ -126,7 +126,19 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 });
 
 
-const lightboxItems = [...document.querySelectorAll('.media-placeholder.has-image img')];
+const lightboxTriggers = [...document.querySelectorAll('.media-placeholder.has-image img')];
+const lightboxCandidates = [
+  ...document.querySelectorAll('.collection-set:not(.gallery-clone) .collection-card img'),
+  ...document.querySelectorAll('.media-placeholder.has-image:not(.collection-card) img')
+];
+const lightboxItems = [];
+const lightboxIndexBySource = new Map();
+lightboxCandidates.forEach((image) => {
+  const sourceKey = new URL(image.getAttribute('src'), document.baseURI).pathname;
+  if (lightboxIndexBySource.has(sourceKey)) return;
+  lightboxIndexBySource.set(sourceKey, lightboxItems.length);
+  lightboxItems.push(image);
+});
 if (lightboxItems.length) {
   const lightbox = document.createElement('div');
   lightbox.className = 'image-lightbox';
@@ -181,13 +193,19 @@ if (lightboxItems.length) {
     returnFocus?.focus?.({ preventScroll: true });
   }
 
-  lightboxItems.forEach((image, index) => {
+  lightboxTriggers.forEach((image) => {
+    const sourceKey = new URL(image.getAttribute('src'), document.baseURI).pathname;
+    const index = lightboxIndexBySource.get(sourceKey);
     const trigger = image.closest('.media-placeholder');
-    trigger.tabIndex = 0;
-    trigger.setAttribute('role', 'button');
-    trigger.setAttribute('aria-label', `View full screen: ${image.alt}`);
+    const isClone = Boolean(image.closest('.gallery-clone'));
+    const authoredAlt = lightboxItems[index]?.alt || `Casa Sol Tardío frame ${index + 1}`;
+    if (!isClone) {
+      trigger.tabIndex = 0;
+      trigger.setAttribute('role', 'button');
+      trigger.setAttribute('aria-label', `View full screen: ${authoredAlt}`);
+    }
     trigger.addEventListener('click', () => openLightbox(index, trigger));
-    trigger.addEventListener('keydown', (event) => {
+    if (!isClone) trigger.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         openLightbox(index, trigger);
@@ -207,6 +225,16 @@ if (lightboxItems.length) {
     if (event.key === 'ArrowLeft') showImage(activeIndex - 1);
     if (event.key === 'ArrowRight') showImage(activeIndex + 1);
   });
+}
+
+const completeCollection = document.querySelector('.complete-collection');
+if (completeCollection && !reducedMotion) {
+  let collectionResumeTimer;
+  completeCollection.addEventListener('touchstart', () => {
+    completeCollection.classList.add('is-paused');
+    clearTimeout(collectionResumeTimer);
+    collectionResumeTimer = setTimeout(() => completeCollection.classList.remove('is-paused'), 3200);
+  }, { passive: true });
 }
 
 
