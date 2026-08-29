@@ -292,6 +292,7 @@ let audioContext = null;
 let pageTurnBuffer = null;
 let lastPageTurnSound = 0;
 let pageTurnSoundActive = false;
+let backCoverClosingActive = false;
 let musicFadeFrame = null;
 let soundtrackSegment = 0;
 let nextSoundtrackPreload = null;
@@ -451,6 +452,12 @@ function initFlipbook() {
   flipbook.on('changeState', (event) => {
     if (event.data === 'flipping' || event.data === 'user_fold') {
       flipbookBook.classList.remove('is-closed-front', 'is-closed-back');
+      const render = flipbook.getRender();
+      backCoverClosingActive = flipbook.getCurrentPageIndex() === 29 && render.getDirection() === 0;
+      if (backCoverClosingActive) {
+        render.setLeftPage(null);
+        render.setRightPage(null);
+      }
       if (!pageTurnSoundActive) {
         pageTurnSoundActive = true;
         playPageTurnSound();
@@ -458,6 +465,10 @@ function initFlipbook() {
     } else if (event.data === 'read') {
       pageTurnSoundActive = false;
       const pageIndex = flipbook.getCurrentPageIndex();
+      if (backCoverClosingActive) {
+        flipbook.turnToPage(pageIndex);
+        backCoverClosingActive = false;
+      }
       updateFlipbookStatus(pageIndex);
       updateClosedCoverState(pageIndex);
     }
