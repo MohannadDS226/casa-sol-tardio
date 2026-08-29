@@ -395,11 +395,15 @@ casaSoundtrack?.addEventListener('ended', async () => {
   try { await casaSoundtrack.play(); } catch { /* Sound control remains available. */ }
 });
 
-function updateFlipbookStatus(pageIndex = 0) {
+function updateClosedCoverState(pageIndex = 0) {
   const page = Math.min(32, Math.max(1, pageIndex + 1));
   const isLandscape = flipbook?.getOrientation?.() === 'landscape';
   flipbookBook?.classList.toggle('is-closed-front', isLandscape && page === 1);
   flipbookBook?.classList.toggle('is-closed-back', isLandscape && page === 32);
+}
+
+function updateFlipbookStatus(pageIndex = 0) {
+  const page = Math.min(32, Math.max(1, pageIndex + 1));
   if (flipbookRange) flipbookRange.value = String(page);
   if (flipbookCount) {
     flipbookCount.textContent = page === 1
@@ -434,8 +438,16 @@ function initFlipbook() {
   });
   flipbook.loadFromImages(flipbookPages);
   flipbook.on('flip', (event) => updateFlipbookStatus(Number(event.data)));
-  flipbook.on('init', (event) => updateFlipbookStatus(Number(event.data.page || 0)));
-  flipbook.on('changeOrientation', () => updateFlipbookStatus(flipbook.getCurrentPageIndex()));
+  flipbook.on('init', (event) => {
+    const pageIndex = Number(event.data.page || 0);
+    updateFlipbookStatus(pageIndex);
+    updateClosedCoverState(pageIndex);
+  });
+  flipbook.on('changeOrientation', () => {
+    const pageIndex = flipbook.getCurrentPageIndex();
+    updateFlipbookStatus(pageIndex);
+    updateClosedCoverState(pageIndex);
+  });
   flipbook.on('changeState', (event) => {
     if (event.data === 'flipping' || event.data === 'user_fold') {
       flipbookBook.classList.remove('is-closed-front', 'is-closed-back');
@@ -445,7 +457,9 @@ function initFlipbook() {
       }
     } else if (event.data === 'read') {
       pageTurnSoundActive = false;
-      updateFlipbookStatus(flipbook.getCurrentPageIndex());
+      const pageIndex = flipbook.getCurrentPageIndex();
+      updateFlipbookStatus(pageIndex);
+      updateClosedCoverState(pageIndex);
     }
   });
 }
