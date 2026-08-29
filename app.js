@@ -265,6 +265,101 @@ document.querySelectorAll('.media-placeholder.has-image img').forEach((image) =>
   image.addEventListener('error', () => image.closest('.media-placeholder')?.classList.add('image-failed'));
 });
 
+const flipbookReader = document.querySelector('.flipbook-reader');
+const flipbookOpen = document.querySelector('[data-flipbook-open]');
+const flipbookClose = document.querySelector('[data-flipbook-close]');
+const flipbookFullscreen = document.querySelector('[data-flipbook-fullscreen]');
+const flipbookPrev = document.querySelector('[data-flipbook-prev]');
+const flipbookNext = document.querySelector('[data-flipbook-next]');
+const flipbookRange = document.querySelector('[data-flipbook-range]');
+const flipbookCount = document.querySelector('.flipbook-page-count');
+const flipbookBook = document.querySelector('#issue-flipbook');
+const flipbookPages = Array.from({ length: 32 }, (_, index) =>
+  `assets/issue-pages/page-${String(index + 1).padStart(2, '0')}.webp`
+);
+let flipbook = null;
+let flipbookReturnFocus = null;
+
+function updateFlipbookStatus(pageIndex = 0) {
+  const page = Math.min(32, Math.max(1, pageIndex + 1));
+  if (flipbookRange) flipbookRange.value = String(page);
+  if (flipbookCount) {
+    flipbookCount.textContent = page === 1
+      ? 'Cover · 01 / 32'
+      : `Page ${String(page).padStart(2, '0')} / 32`;
+  }
+  if (flipbookPrev) flipbookPrev.disabled = page <= 1;
+  if (flipbookNext) flipbookNext.disabled = page >= 32;
+}
+
+function initFlipbook() {
+  if (flipbook || !flipbookBook || !window.St?.PageFlip) return;
+  flipbook = new window.St.PageFlip(flipbookBook, {
+    width: 576,
+    height: 774,
+    size: 'stretch',
+    minWidth: 270,
+    maxWidth: 650,
+    minHeight: 363,
+    maxHeight: 874,
+    maxShadowOpacity: 0.38,
+    showCover: true,
+    mobileScrollSupport: false,
+    swipeDistance: 26,
+    flippingTime: 880,
+    usePortrait: true,
+    autoSize: true,
+    drawShadow: true,
+    showPageCorners: true
+  });
+  flipbook.loadFromImages(flipbookPages);
+  flipbook.on('flip', (event) => updateFlipbookStatus(Number(event.data)));
+  flipbook.on('init', (event) => updateFlipbookStatus(Number(event.data.page || 0)));
+}
+
+function openFlipbook(trigger) {
+  if (!flipbookReader) return;
+  flipbookReturnFocus = trigger;
+  flipbookReader.hidden = false;
+  flipbookReader.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('flipbook-open');
+  requestAnimationFrame(() => {
+    initFlipbook();
+    flipbook?.update();
+    flipbookClose?.focus({ preventScroll: true });
+  });
+}
+
+function closeFlipbook() {
+  if (!flipbookReader || flipbookReader.hidden) return;
+  if (document.fullscreenElement) document.exitFullscreen?.();
+  flipbookReader.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('flipbook-open');
+  flipbookReader.hidden = true;
+  flipbookReturnFocus?.focus?.({ preventScroll: true });
+}
+
+flipbookOpen?.addEventListener('click', () => openFlipbook(flipbookOpen));
+flipbookClose?.addEventListener('click', closeFlipbook);
+flipbookPrev?.addEventListener('click', () => flipbook?.flipPrev('top'));
+flipbookNext?.addEventListener('click', () => flipbook?.flipNext('top'));
+flipbookRange?.addEventListener('input', () => flipbook?.turnToPage(Number(flipbookRange.value) - 1));
+flipbookFullscreen?.addEventListener('click', async () => {
+  if (!flipbookReader) return;
+  if (document.fullscreenElement) await document.exitFullscreen?.();
+  else await flipbookReader.requestFullscreen?.();
+});
+document.addEventListener('fullscreenchange', () => {
+  if (!flipbookFullscreen) return;
+  flipbookFullscreen.firstChild.textContent = document.fullscreenElement ? 'Exit full screen ' : 'Full screen ';
+  requestAnimationFrame(() => flipbook?.update());
+});
+flipbookReader?.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !document.fullscreenElement) closeFlipbook();
+  if (event.key === 'ArrowLeft') flipbook?.flipPrev('top');
+  if (event.key === 'ArrowRight') flipbook?.flipNext('top');
+});
+
 const completeCollection = document.querySelector('.complete-collection');
 if (completeCollection && !reducedMotion) {
   let collectionResumeTimer;

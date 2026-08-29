@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260829-issue" />
+  <link rel="stylesheet" href="styles.css?v=20260829-flipbook" />
 </head>
 <body>
   <a class="skip-link" href="#story">Skip to the story</a>
@@ -348,10 +348,10 @@
             <div><dt>Published</dt><dd>2026</dd></div>
           </dl>
           <div class="issue-actions">
-            <a class="issue-read" href="https://drive.google.com/file/d/1_gx3UsHSVzjSk50PfXwHQunhbFqSDMJ-/view?usp=drivesdk" target="_blank" rel="noreferrer">Read the issue <span>↗</span></a>
+            <button class="issue-read" type="button" data-flipbook-open>Open interactive edition <span>↗</span></button>
             <a class="issue-download" href="https://drive.google.com/file/d/1_gx3UsHSVzjSk50PfXwHQunhbFqSDMJ-/view?usp=drivesdk" target="_blank" rel="noreferrer">Download PDF <span>9.5 MB</span></a>
           </div>
-          <p class="issue-device-note">Opens in a full-screen PDF reader with download controls on every device.</p>
+          <p class="issue-device-note">Turn the pages, swipe through the story, or enter full screen. Single-page reading activates automatically on mobile.</p>
         </div>
       </div>
     </section>
@@ -374,7 +374,33 @@
     <div><span>Project</span><strong>Mallorca · 2023—2026</strong></div>
     <a href="https://www.instagram.com/mohannad.visuals/" target="_blank" rel="noreferrer">Instagram ↗</a>
   </footer>
+  <div class="flipbook-reader" role="dialog" aria-modal="true" aria-labelledby="flipbook-title" aria-hidden="true" hidden>
+    <header class="flipbook-toolbar">
+      <div>
+        <span>Architectural Digest · Special Issue · 2026</span>
+        <strong id="flipbook-title">Casa Sol Tardío · Issue 001</strong>
+      </div>
+      <div class="flipbook-toolbar-actions">
+        <a href="https://drive.google.com/file/d/1_gx3UsHSVzjSk50PfXwHQunhbFqSDMJ-/view?usp=drivesdk" target="_blank" rel="noreferrer">Download PDF ↓</a>
+        <button type="button" data-flipbook-fullscreen>Full screen <span>↗</span></button>
+        <button type="button" data-flipbook-close>Close <span>×</span></button>
+      </div>
+    </header>
+    <div class="flipbook-stage">
+      <p class="flipbook-hint">Drag a page corner or swipe to turn</p>
+      <div class="flipbook-book" id="issue-flipbook" aria-label="Interactive 32-page Casa Sol Tardío magazine"></div>
+    </div>
+    <footer class="flipbook-controls">
+      <button type="button" data-flipbook-prev aria-label="Previous page">← <span>Previous</span></button>
+      <label>
+        <span class="flipbook-page-count" aria-live="polite">Cover · 01 / 32</span>
+        <input type="range" min="1" max="32" value="1" step="1" data-flipbook-range aria-label="Jump to page">
+      </label>
+      <button type="button" data-flipbook-next aria-label="Next page"><span>Next</span> →</button>
+    </footer>
+  </div>
   <div class="media-cursor" aria-hidden="true"><span>View</span></div>
-  <script src="app.js?v=20260829-issue"></script>
+  <script src="assets/page-flip.browser.js?v=2.0.7"></script>
+  <script src="app.js?v=20260829-flipbook"></script>
 </body>
 </html>
