@@ -396,6 +396,9 @@ casaSoundtrack?.addEventListener('ended', async () => {
 
 function updateFlipbookStatus(pageIndex = 0) {
   const page = Math.min(32, Math.max(1, pageIndex + 1));
+  const isLandscape = flipbook?.getOrientation?.() === 'landscape';
+  flipbookBook?.classList.toggle('is-closed-front', isLandscape && page === 1);
+  flipbookBook?.classList.toggle('is-closed-back', isLandscape && page === 32);
   if (flipbookRange) flipbookRange.value = String(page);
   if (flipbookCount) {
     flipbookCount.textContent = page === 1
@@ -431,8 +434,12 @@ function initFlipbook() {
   flipbook.loadFromImages(flipbookPages);
   flipbook.on('flip', (event) => updateFlipbookStatus(Number(event.data)));
   flipbook.on('init', (event) => updateFlipbookStatus(Number(event.data.page || 0)));
+  flipbook.on('changeOrientation', () => updateFlipbookStatus(flipbook.getCurrentPageIndex()));
   flipbook.on('changeState', (event) => {
-    if (event.data === 'flipping') playPageTurnSound();
+    if (event.data === 'flipping') {
+      flipbookBook.classList.remove('is-closed-front', 'is-closed-back');
+      playPageTurnSound();
+    }
   });
 }
 
