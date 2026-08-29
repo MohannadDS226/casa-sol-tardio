@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260829-flipbook" />
+  <link rel="stylesheet" href="styles.css?v=20260829-flipbook-audio" />
 </head>
 <body>
   <a class="skip-link" href="#story">Skip to the story</a>
@@ -381,6 +381,7 @@
         <strong id="flipbook-title">Casa Sol Tardío · Issue 001</strong>
       </div>
       <div class="flipbook-toolbar-actions">
+        <button type="button" data-flipbook-sound aria-pressed="true">Sound <span class="sound-state">On</span></button>
         <a href="https://drive.google.com/file/d/1_gx3UsHSVzjSk50PfXwHQunhbFqSDMJ-/view?usp=drivesdk" target="_blank" rel="noreferrer">Download PDF ↓</a>
         <button type="button" data-flipbook-fullscreen>Full screen <span>↗</span></button>
         <button type="button" data-flipbook-close>Close <span>×</span></button>
@@ -398,9 +399,10 @@
       </label>
       <button type="button" data-flipbook-next aria-label="Next page"><span>Next</span> →</button>
     </footer>
+    <audio id="casa-soundtrack" preload="none" aria-hidden="true"></audio>
   </div>
   <div class="media-cursor" aria-hidden="true"><span>View</span></div>
   <script src="assets/page-flip.browser.js?v=2.0.7"></script>
-  <script src="app.js?v=20260829-flipbook-v2"></script>
+  <script src="app.js?v=20260829-flipbook-audio"></script>
 </body>
 </html>

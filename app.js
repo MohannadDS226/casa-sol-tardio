@@ -259,6 +259,8 @@ if (lightboxItems.length) {
 
 document.addEventListener('visibilitychange', () => {
   document.body.classList.toggle('page-hidden', document.hidden);
+  if (document.hidden) casaSoundtrack?.pause();
+  else if (soundEnabled && flipbookReader && !flipbookReader.hidden) startReaderAudio();
 });
 
 document.querySelectorAll('.media-placeholder.has-image img').forEach((image) => {
@@ -269,16 +271,128 @@ const flipbookReader = document.querySelector('.flipbook-reader');
 const flipbookOpen = document.querySelector('[data-flipbook-open]');
 const flipbookClose = document.querySelector('[data-flipbook-close]');
 const flipbookFullscreen = document.querySelector('[data-flipbook-fullscreen]');
+const flipbookSound = document.querySelector('[data-flipbook-sound]');
+const flipbookSoundState = flipbookSound?.querySelector('.sound-state');
 const flipbookPrev = document.querySelector('[data-flipbook-prev]');
 const flipbookNext = document.querySelector('[data-flipbook-next]');
 const flipbookRange = document.querySelector('[data-flipbook-range]');
 const flipbookCount = document.querySelector('.flipbook-page-count');
 const flipbookBook = document.querySelector('#issue-flipbook');
+const casaSoundtrack = document.querySelector('#casa-soundtrack');
+const soundtrackSegments = Array.from({ length: 8 }, (_, index) =>
+  `assets/audio/casa-track-${String(index).padStart(2, '0')}.mp3`
+);
 const flipbookPages = Array.from({ length: 32 }, (_, index) =>
   `assets/issue-pages/page-${String(index + 1).padStart(2, '0')}.webp`
 );
 let flipbook = null;
 let flipbookReturnFocus = null;
+let soundEnabled = true;
+let audioContext = null;
+let pageTurnBuffer = null;
+let lastPageTurnSound = 0;
+let musicFadeFrame = null;
+let soundtrackSegment = 0;
+let nextSoundtrackPreload = null;
+
+function setSoundtrackSegment(index) {
+  if (!casaSoundtrack) return;
+  soundtrackSegment = (index + soundtrackSegments.length) % soundtrackSegments.length;
+  casaSoundtrack.src = soundtrackSegments[soundtrackSegment];
+  casaSoundtrack.load();
+  nextSoundtrackPreload = new Audio();
+  nextSoundtrackPreload.preload = 'auto';
+  nextSoundtrackPreload.src = soundtrackSegments[(soundtrackSegment + 1) % soundtrackSegments.length];
+}
+
+function ensureAudioEngine() {
+  if (audioContext) return audioContext;
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return null;
+  audioContext = new AudioContext();
+  const duration = .48;
+  const length = Math.floor(audioContext.sampleRate * duration);
+  pageTurnBuffer = audioContext.createBuffer(1, length, audioContext.sampleRate);
+  const channel = pageTurnBuffer.getChannelData(0);
+  let smoothed = 0;
+  for (let index = 0; index < length; index += 1) {
+    const progress = index / length;
+    smoothed = smoothed * .58 + (Math.random() * 2 - 1) * .42;
+    channel[index] = smoothed * Math.sin(Math.PI * progress) * (1 - progress * .32);
+  }
+  return audioContext;
+}
+
+function playPageTurnSound() {
+  if (!soundEnabled) return;
+  const now = performance.now();
+  if (now - lastPageTurnSound < 320) return;
+  lastPageTurnSound = now;
+  const context = ensureAudioEngine();
+  if (!context || !pageTurnBuffer) return;
+  context.resume?.();
+  const source = context.createBufferSource();
+  const filter = context.createBiquadFilter();
+  const gain = context.createGain();
+  source.buffer = pageTurnBuffer;
+  source.playbackRate.value = .9 + Math.random() * .16;
+  filter.type = 'bandpass';
+  filter.Q.value = .72;
+  filter.frequency.setValueAtTime(1750, context.currentTime);
+  filter.frequency.exponentialRampToValueAtTime(620, context.currentTime + .46);
+  gain.gain.setValueAtTime(.0001, context.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.11, context.currentTime + .035);
+  gain.gain.exponentialRampToValueAtTime(.035, context.currentTime + .27);
+  gain.gain.exponentialRampToValueAtTime(.0001, context.currentTime + .48);
+  source.connect(filter).connect(gain).connect(context.destination);
+  source.start();
+}
+
+function fadeSoundtrack(target, duration = 500, pauseAfter = false) {
+  if (!casaSoundtrack) return;
+  cancelAnimationFrame(musicFadeFrame);
+  const from = casaSoundtrack.volume;
+  const started = performance.now();
+  function frame(now) {
+    const progress = Math.min(1, (now - started) / duration);
+    casaSoundtrack.volume = from + (target - from) * (1 - Math.pow(1 - progress, 3));
+    if (progress < 1) musicFadeFrame = requestAnimationFrame(frame);
+    else if (pauseAfter) casaSoundtrack.pause();
+  }
+  musicFadeFrame = requestAnimationFrame(frame);
+}
+
+async function startReaderAudio() {
+  if (!soundEnabled || !casaSoundtrack) return;
+  const context = ensureAudioEngine();
+  context?.resume?.();
+  if (!casaSoundtrack.getAttribute('src')) setSoundtrackSegment(soundtrackSegment);
+  casaSoundtrack.volume = 0;
+  try {
+    await casaSoundtrack.play();
+    fadeSoundtrack(.13, 900);
+  } catch {
+    soundEnabled = false;
+    updateSoundControl();
+  }
+}
+
+function stopReaderAudio() {
+  if (!casaSoundtrack || casaSoundtrack.paused) return;
+  fadeSoundtrack(0, 320, true);
+}
+
+function updateSoundControl() {
+  flipbookSound?.setAttribute('aria-pressed', String(soundEnabled));
+  if (flipbookSoundState) flipbookSoundState.textContent = soundEnabled ? 'On' : 'Off';
+}
+
+casaSoundtrack?.addEventListener('ended', async () => {
+  if (!soundEnabled || !flipbookReader || flipbookReader.hidden) return;
+  setSoundtrackSegment(soundtrackSegment + 1);
+  casaSoundtrack.volume = .13;
+  try { await casaSoundtrack.play(); } catch { /* Sound control remains available. */ }
+});
 
 function updateFlipbookStatus(pageIndex = 0) {
   const page = Math.min(32, Math.max(1, pageIndex + 1));
@@ -317,6 +431,9 @@ function initFlipbook() {
   flipbook.loadFromImages(flipbookPages);
   flipbook.on('flip', (event) => updateFlipbookStatus(Number(event.data)));
   flipbook.on('init', (event) => updateFlipbookStatus(Number(event.data.page || 0)));
+  flipbook.on('changeState', (event) => {
+    if (event.data === 'flipping') playPageTurnSound();
+  });
 }
 
 function openFlipbook(trigger) {
@@ -325,6 +442,7 @@ function openFlipbook(trigger) {
   flipbookReader.hidden = false;
   flipbookReader.setAttribute('aria-hidden', 'false');
   document.body.classList.add('flipbook-open');
+  startReaderAudio();
   requestAnimationFrame(() => {
     initFlipbook();
     flipbook?.update();
@@ -337,12 +455,19 @@ function closeFlipbook() {
   if (document.fullscreenElement) document.exitFullscreen?.();
   flipbookReader.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('flipbook-open');
+  stopReaderAudio();
   flipbookReader.hidden = true;
   flipbookReturnFocus?.focus?.({ preventScroll: true });
 }
 
 flipbookOpen?.addEventListener('click', () => openFlipbook(flipbookOpen));
 flipbookClose?.addEventListener('click', closeFlipbook);
+flipbookSound?.addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  updateSoundControl();
+  if (soundEnabled) startReaderAudio();
+  else stopReaderAudio();
+});
 flipbookPrev?.addEventListener('click', () => flipbook?.flipPrev('top'));
 flipbookNext?.addEventListener('click', () => flipbook?.flipNext('top'));
 flipbookRange?.addEventListener('input', () => flipbook?.turnToPage(Number(flipbookRange.value) - 1));
