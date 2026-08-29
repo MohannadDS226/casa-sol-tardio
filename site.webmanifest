@@ -1,0 +1,20 @@
+{
+  "name": "Casa Sol Tardío",
+  "short_name": "Casa Sol",
+  "description": "A cinematic architectural visualization project in Mallorca by Mohannad Haikal.",
+  "id": "/casa-sol-tardio/",
+  "start_url": "/casa-sol-tardio/",
+  "scope": "/casa-sol-tardio/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0d0f0c",
+  "theme_color": "#f1e9dc",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
