@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mohannadds226.github.io/casa-sol-tardio/sitemap.xml
+Sitemap: https://mohannadds226.github.io/casa-sol-tardio/sitemap.txt
