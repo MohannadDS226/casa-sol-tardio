@@ -294,14 +294,16 @@ function updateFlipbookStatus(pageIndex = 0) {
 
 function initFlipbook() {
   if (flipbook || !flipbookBook || !window.St?.PageFlip) return;
+  const readerMaxHeight = Math.min(874, Math.max(430, window.innerHeight - 190));
+  const readerMaxWidth = Math.min(650, Math.round(readerMaxHeight * 576 / 774));
   flipbook = new window.St.PageFlip(flipbookBook, {
     width: 576,
     height: 774,
     size: 'stretch',
     minWidth: 270,
-    maxWidth: 650,
+    maxWidth: readerMaxWidth,
     minHeight: 363,
-    maxHeight: 874,
+    maxHeight: readerMaxHeight,
     maxShadowOpacity: 0.38,
     showCover: true,
     mobileScrollSupport: false,
