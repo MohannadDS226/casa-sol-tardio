@@ -130,101 +130,52 @@ updateProgress();
 const casaFilm = document.querySelector('#casa-film');
 const filmPlayButton = document.querySelector('.film-play-button');
 const filmPlayerShell = document.querySelector('.film-player-shell');
-const filmReactors = [...document.querySelectorAll('.film-reactor')];
-const filmReactorBars = [];
-let filmAudioContext;
-let filmAnalyser;
-let filmFrequencyData;
-let filmSourceNode;
-let filmReactorFrame;
+const filmAmbilight = document.querySelector('.film-ambilight');
+const filmAmbilightContext = filmAmbilight?.getContext('2d', { alpha: false, desynchronized: true });
+let filmAmbilightFrame;
+let filmVideoFrame;
 
-filmReactors.forEach((reactor) => {
-  for (let index = 0; index < 14; index += 1) {
-    const bar = document.createElement('i');
-    bar.style.setProperty('--bar-scale', '0.14');
-    bar.style.setProperty('--bar-opacity', '0.18');
-    reactor.appendChild(bar);
-    filmReactorBars.push(bar);
-  }
-});
-
-async function initializeFilmReactor() {
-  if (!casaFilm || !filmPlayerShell || reducedMotion) return false;
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContextClass) return false;
-
-  if (!filmAudioContext) {
-    filmAudioContext = new AudioContextClass();
-    filmAnalyser = filmAudioContext.createAnalyser();
-    filmAnalyser.fftSize = 128;
-    filmAnalyser.smoothingTimeConstant = 0.78;
-    filmFrequencyData = new Uint8Array(filmAnalyser.frequencyBinCount);
-    filmSourceNode = filmAudioContext.createMediaElementSource(casaFilm);
-    filmSourceNode.connect(filmAnalyser);
-    filmAnalyser.connect(filmAudioContext.destination);
-  }
-
-  if (filmAudioContext.state === 'suspended') await filmAudioContext.resume();
-  return true;
-}
-
-function renderFilmReactors() {
-  if (!filmAnalyser || !filmFrequencyData || !filmPlayerShell) return;
-  filmAnalyser.getByteFrequencyData(filmFrequencyData);
-
-  const bassBins = filmFrequencyData.slice(1, 8);
-  const bass = bassBins.reduce((sum, value) => sum + value, 0) / (bassBins.length * 255);
-  const energy = filmFrequencyData.reduce((sum, value) => sum + value, 0) / (filmFrequencyData.length * 255);
-  filmPlayerShell.style.setProperty('--ambient-opacity', Math.min(0.95, 0.28 + energy * 1.45).toFixed(3));
-  filmPlayerShell.style.setProperty('--ambient-scale', (1 + bass * 0.035).toFixed(4));
-  filmPlayerShell.style.setProperty('--ambient-blur', `${(1 + bass * 5).toFixed(2)}px`);
-
-  const half = filmReactorBars.length / 2;
-  filmReactorBars.forEach((bar, index) => {
-    const localIndex = index % half;
-    const frequencyIndex = Math.min(2 + Math.round(localIndex * 2.8), filmFrequencyData.length - 1);
-    const rawLevel = filmFrequencyData[frequencyIndex] / 255;
-    const previousScale = Number(bar.style.getPropertyValue('--bar-scale')) || 0.14;
-    const previousLevel = Math.max(0, (previousScale - 0.14) / 0.86);
-    const level = Math.max(rawLevel, previousLevel * 0.82);
-    bar.style.setProperty('--bar-scale', (0.14 + level * 0.86).toFixed(3));
-    bar.style.setProperty('--bar-opacity', (0.18 + level * 0.82).toFixed(3));
-  });
-
-  if (!casaFilm.paused && !casaFilm.ended) {
-    filmReactorFrame = requestAnimationFrame(renderFilmReactors);
+function queueFilmAmbilightFrame() {
+  if (!casaFilm || casaFilm.paused || casaFilm.ended) return;
+  if ('requestVideoFrameCallback' in casaFilm) {
+    filmVideoFrame = casaFilm.requestVideoFrameCallback(renderFilmAmbilight);
+  } else {
+    filmAmbilightFrame = requestAnimationFrame(renderFilmAmbilight);
   }
 }
 
-async function startFilmReactors() {
+function renderFilmAmbilight() {
+  if (!casaFilm || !filmAmbilightContext || casaFilm.readyState < 2) {
+    queueFilmAmbilightFrame();
+    return;
+  }
+
   try {
-    if (!(await initializeFilmReactor())) return;
-    cancelAnimationFrame(filmReactorFrame);
-    filmPlayerShell.classList.add('is-reacting');
-    renderFilmReactors();
+    filmAmbilightContext.drawImage(casaFilm, 0, 0, filmAmbilight.width, filmAmbilight.height);
+    filmPlayerShell?.classList.add('is-reacting');
   } catch (error) {
     filmPlayerShell?.classList.remove('is-reacting');
+    return;
   }
+  queueFilmAmbilightFrame();
 }
 
-function stopFilmReactors() {
-  cancelAnimationFrame(filmReactorFrame);
-  filmPlayerShell?.classList.remove('is-reacting');
-  filmPlayerShell?.style.setProperty('--ambient-opacity', '.35');
-  filmPlayerShell?.style.setProperty('--ambient-scale', '1');
-  filmPlayerShell?.style.setProperty('--ambient-blur', '1px');
-  filmReactorBars.forEach((bar) => {
-    bar.style.setProperty('--bar-scale', '0.14');
-    bar.style.setProperty('--bar-opacity', '0.18');
-  });
+function stopFilmAmbilight(dim = true) {
+  cancelAnimationFrame(filmAmbilightFrame);
+  if (filmVideoFrame && casaFilm?.cancelVideoFrameCallback) casaFilm.cancelVideoFrameCallback(filmVideoFrame);
+  filmAmbilightFrame = undefined;
+  filmVideoFrame = undefined;
+  if (dim) filmPlayerShell?.classList.remove('is-reacting');
 }
 
-casaFilm?.addEventListener('pointerdown', () => initializeFilmReactor().catch(() => {}));
-casaFilm?.addEventListener('keydown', () => initializeFilmReactor().catch(() => {}));
+function startFilmAmbilight() {
+  if (!filmAmbilightContext) return;
+  stopFilmAmbilight(false);
+  queueFilmAmbilightFrame();
+}
 
 filmPlayButton?.addEventListener('click', async () => {
   try {
-    await initializeFilmReactor();
     await casaFilm.play();
   } catch (error) {
     casaFilm.controls = true;
@@ -233,14 +184,14 @@ filmPlayButton?.addEventListener('click', async () => {
 
 casaFilm?.addEventListener('play', () => {
   filmPlayButton?.classList.add('is-hidden');
-  startFilmReactors();
+  startFilmAmbilight();
 });
 
-casaFilm?.addEventListener('pause', stopFilmReactors);
+casaFilm?.addEventListener('pause', () => stopFilmAmbilight());
 
 casaFilm?.addEventListener('ended', () => {
   filmPlayButton?.classList.remove('is-hidden');
-  stopFilmReactors();
+  stopFilmAmbilight();
 });
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
