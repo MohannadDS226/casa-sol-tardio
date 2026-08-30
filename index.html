@@ -187,7 +187,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260830-film-ambilight-soft-2" />
+  <link rel="stylesheet" href="styles.css?v=20260830-film-ambilight-diffuse" />
 </head>
 <body>
   <a class="skip-link" href="#story">Skip to the story</a>
@@ -380,7 +380,9 @@
         <p>Arrival → Immersion → Afterglow</p>
       </div>
       <div class="film-player-shell reveal">
-        <canvas class="film-ambilight" width="54" height="96" aria-hidden="true"></canvas>
+        <div class="film-ambilight-field" aria-hidden="true">
+          <canvas class="film-ambilight" width="54" height="96"></canvas>
+        </div>
         <div class="film-player">
           <video id="casa-film" controls preload="metadata" playsinline poster="assets/video/casa-sol-tardio-film-poster.jpg" aria-label="Casa Sol Tardío original architectural film">
             <source src="assets/video/casa-sol-tardio-film-1080x1920.mp4" type="video/mp4">
