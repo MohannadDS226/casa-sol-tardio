@@ -29,6 +29,8 @@ jobs:
 
       - name: Encode the portrait web master
         run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
           mkdir -p assets/video
           ffmpeg -y -hide_banner -loglevel error -i /tmp/casa-film-master.mp4 \
             -vf 'scale=1080:1920:flags=lanczos' \
