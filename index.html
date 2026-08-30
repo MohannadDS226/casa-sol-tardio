@@ -187,7 +187,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260830-bts-teaser" />
+  <link rel="stylesheet" href="styles.css?v=20260830-film-reactor" />
 </head>
 <body>
   <a class="skip-link" href="#story">Skip to the story</a>
@@ -379,15 +379,20 @@
         <h2>Where Light<br><em>Lingers</em></h2>
         <p>Arrival → Immersion → Afterglow</p>
       </div>
-      <div class="film-player reveal">
-        <video id="casa-film" controls preload="metadata" playsinline poster="assets/video/casa-sol-tardio-film-poster.jpg" aria-label="Casa Sol Tardío original architectural film">
-          <source src="assets/video/casa-sol-tardio-film-1080x1920.mp4" type="video/mp4">
-          Your browser does not support HTML video.
-        </video>
-        <button class="film-play-button" type="button" aria-label="Play Casa Sol Tardío film" aria-controls="casa-film">
-          <span class="play" aria-hidden="true">▶</span>
-          <span class="film-note">Play the film · 01:32</span>
-        </button>
+      <div class="film-player-shell reveal" style="--ambient-opacity:.35;--ambient-scale:1;--ambient-blur:1px">
+        <div class="film-ambient" aria-hidden="true"></div>
+        <div class="film-reactor film-reactor-left" aria-hidden="true"></div>
+        <div class="film-player">
+          <video id="casa-film" controls preload="metadata" playsinline poster="assets/video/casa-sol-tardio-film-poster.jpg" aria-label="Casa Sol Tardío original architectural film">
+            <source src="assets/video/casa-sol-tardio-film-1080x1920.mp4" type="video/mp4">
+            Your browser does not support HTML video.
+          </video>
+          <button class="film-play-button" type="button" aria-label="Play Casa Sol Tardío film" aria-controls="casa-film">
+            <span class="play" aria-hidden="true">▶</span>
+            <span class="film-note">Play the film · 01:32</span>
+          </button>
+        </div>
+        <div class="film-reactor film-reactor-right" aria-hidden="true"></div>
       </div>
     </section>
 
@@ -605,6 +610,6 @@
   </div>
   <div class="media-cursor" aria-hidden="true"><span>View</span></div>
   <script src="assets/page-flip.browser.js?v=2.0.7-casa-transparent"></script>
-  <script src="app.js?v=20260830-film"></script>
+  <script src="app.js?v=20260830-film-reactor"></script>
 </body>
 </html>

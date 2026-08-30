@@ -167,8 +167,11 @@ main>section[id]{scroll-margin-top:72px}.skip-link{position:fixed;z-index:1000;t
 @media(prefers-reduced-motion:reduce){.magazine-page,.issue-read{transition:none}.issue-experience:hover .magazine-cover{transform:rotateY(7deg) rotateZ(-4deg)}.issue-experience:hover .magazine-contents{transform:translate(12%,5%) rotateY(-8deg) rotateZ(5deg)}}
 
 /* Portrait architectural film */
-.film-player{position:relative;justify-self:center;width:min(100%,520px);aspect-ratio:9/16;max-height:min(82svh,900px);overflow:hidden;background:#090a08;box-shadow:0 36px 90px rgba(0,0,0,.42);isolation:isolate}
+.film-player-shell{position:relative;justify-self:center;display:grid;place-items:center;width:min(100%,610px);isolation:isolate}
+.film-player{position:relative;width:min(calc(100% - 88px),520px);aspect-ratio:9/16;max-height:min(82svh,900px);overflow:hidden;background:#090a08;box-shadow:0 36px 90px rgba(0,0,0,.42);isolation:isolate}
 .film-player video{display:block;width:100%;height:100%;object-fit:contain;background:#090a08}
+.film-ambient{position:absolute;z-index:-1;inset:4% 10%;border:1px solid rgba(231,139,81,.48);box-shadow:0 0 90px rgba(192,76,42,.48),0 0 170px rgba(255,180,102,.2);filter:blur(var(--ambient-blur));transform:scale(var(--ambient-scale));opacity:var(--ambient-opacity);transition:opacity .35s ease,transform 80ms linear,filter 100ms linear;pointer-events:none}
+.film-reactor{position:absolute;z-index:2;top:7%;bottom:7%;width:40px;display:grid;grid-template-rows:repeat(14,1fr);align-items:center;gap:clamp(3px,.55vh,7px);pointer-events:none}.film-reactor-left{left:0}.film-reactor-right{right:0}.film-reactor i{display:block;width:37px;height:clamp(2px,.36vh,4px);border-radius:8px;background:linear-gradient(90deg,rgba(170,65,37,.45),rgba(255,197,123,.98));box-shadow:0 0 18px rgba(255,142,72,.82);transform:scaleX(var(--bar-scale));opacity:var(--bar-opacity);transition:transform 70ms linear,opacity 90ms linear}.film-reactor-left i{justify-self:end;transform-origin:right;background:linear-gradient(270deg,rgba(170,65,37,.45),rgba(255,197,123,.98))}.film-reactor-right i{justify-self:start;transform-origin:left}.film-reactor-left i:nth-child(3n+1),.film-reactor-right i:nth-child(3n+2){height:clamp(3px,.5vh,5px)}
 .film-play-button{position:absolute;inset:0;border:0;padding:0;background:linear-gradient(180deg,rgba(5,6,4,.06),rgba(5,6,4,.36));color:#fff;cursor:pointer;transition:opacity .35s ease,visibility .35s ease}
 .film-play-button.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
 .film-play-button .play{width:104px;height:104px;transition:transform .35s ease,background .35s ease,color .35s ease}
@@ -176,8 +179,9 @@ main>section[id]{scroll-margin-top:72px}.skip-link{position:fixed;z-index:1000;t
 .film-play-button:focus-visible{outline:2px solid #fff;outline-offset:-6px}
 .film-play-button .film-note{right:22px;top:20px}
 
-@media(max-width:800px){.film-player{width:min(100%,440px);max-height:none}.film-play-button .play{width:86px;height:86px}}
-@media(max-width:480px){.film-player{width:100%}.film-play-button .play{width:76px;height:76px}.film-play-button .film-note{right:14px;top:14px}}
+@media(max-width:800px){.film-player-shell{width:min(100%,520px)}.film-player{width:min(calc(100% - 70px),440px);max-height:none}.film-reactor{width:31px}.film-reactor i{width:29px}.film-play-button .play{width:86px;height:86px}}
+@media(max-width:480px){.film-player{width:calc(100% - 46px)}.film-reactor{top:8%;bottom:8%;width:19px}.film-reactor i{width:18px}.film-ambient{inset:3% 6%}.film-play-button .play{width:76px;height:76px}.film-play-button .film-note{right:14px;top:14px}}
+@media(prefers-reduced-motion:reduce){.film-reactor i{transition:none}.film-ambient{filter:none}}
 
 /* Behind-the-scenes film teaser */
 .bts-teaser{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);gap:clamp(55px,9vw,170px);align-items:center;overflow:hidden;padding:150px 6vw 170px;background:#0b0c09;color:var(--paper);border-top:1px solid rgba(255,255,255,.12);isolation:isolate}
