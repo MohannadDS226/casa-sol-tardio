@@ -127,10 +127,23 @@ function updateProgress() {
 addEventListener('scroll', updateProgress, { passive: true });
 updateProgress();
 
-document.querySelector('.film-placeholder').addEventListener('click', () => {
-  const note = document.querySelector('.film-note');
-  note.textContent = 'Final film will premiere here';
-  setTimeout(() => { note.textContent = 'Film placeholder · final master to be added'; }, 2200);
+const casaFilm = document.querySelector('#casa-film');
+const filmPlayButton = document.querySelector('.film-play-button');
+
+filmPlayButton?.addEventListener('click', async () => {
+  try {
+    await casaFilm.play();
+  } catch (error) {
+    casaFilm.controls = true;
+  }
+});
+
+casaFilm?.addEventListener('play', () => {
+  filmPlayButton?.classList.add('is-hidden');
+});
+
+casaFilm?.addEventListener('ended', () => {
+  filmPlayButton?.classList.remove('is-hidden');
 });
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
