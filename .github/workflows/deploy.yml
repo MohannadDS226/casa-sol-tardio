@@ -22,6 +22,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Prepare final Casa film
+        run: |
+          curl -L --fail --retry 3 "https://res.cloudinary.com/vysyrabp/video/upload/v1788201062/casa-sol-tardio-film-1080x1920.mp4" -o assets/video/casa-sol-tardio-film-1080x1920.mp4
+          sed -i 's/PT1M32S/PT1M53S/g' index.html
+          sed -i 's/01:32/01:53/g' index.html
+          sed -i 's/"dateModified": "2026-08-30"/"dateModified": "2026-08-31"/g' index.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
