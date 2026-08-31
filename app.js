@@ -131,7 +131,7 @@ const casaFilm = document.querySelector('#casa-film');
 const filmPlayButton = document.querySelector('.film-play-button');
 const filmPlayerShell = document.querySelector('.film-player-shell');
 const filmAmbilight = document.querySelector('.film-ambilight');
-const filmAmbilightContext = filmAmbilight?.getContext('2d', { alpha: false, desynchronized: true });
+const filmAmbilightContext = filmAmbilight?.getContext('2d', { alpha: true, desynchronized: true });
 let filmAmbilightFrame;
 let filmVideoFrame;
 
@@ -151,7 +151,12 @@ function renderFilmAmbilight() {
   }
 
   try {
-    filmAmbilightContext.drawImage(casaFilm, 0, 0, filmAmbilight.width, filmAmbilight.height);
+    filmAmbilightContext.clearRect(0, 0, filmAmbilight.width, filmAmbilight.height);
+    filmAmbilightContext.save();
+    filmAmbilightContext.globalAlpha = 0.82;
+    filmAmbilightContext.filter = 'blur(30px) saturate(1.45) brightness(1.04)';
+    filmAmbilightContext.drawImage(casaFilm, 75, 90, 90, 160);
+    filmAmbilightContext.restore();
     filmPlayerShell?.classList.add('is-reacting');
   } catch (error) {
     filmPlayerShell?.classList.remove('is-reacting');
