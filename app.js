@@ -127,77 +127,82 @@ function updateProgress() {
 addEventListener('scroll', updateProgress, { passive: true });
 updateProgress();
 
-const casaFilm = document.querySelector('#casa-film');
-const filmPlayButton = document.querySelector('.film-play-button');
-const filmPlayerShell = document.querySelector('.film-player-shell');
-const filmAmbilight = document.querySelector('.film-ambilight');
-const filmAmbilightContext = filmAmbilight?.getContext('2d', { alpha: true, desynchronized: true });
-let filmAmbilightFrame;
-let filmVideoFrame;
+function setupFilmPlayer(shell) {
+  const video = shell.querySelector('video');
+  const playButton = shell.querySelector('.film-play-button');
+  const ambilight = shell.querySelector('.film-ambilight');
+  const context = ambilight?.getContext('2d', { alpha: true, desynchronized: true });
+  let animationFrame;
+  let videoFrame;
 
-function queueFilmAmbilightFrame() {
-  if (!casaFilm || casaFilm.paused || casaFilm.ended) return;
-  if ('requestVideoFrameCallback' in casaFilm) {
-    filmVideoFrame = casaFilm.requestVideoFrameCallback(renderFilmAmbilight);
-  } else {
-    filmAmbilightFrame = requestAnimationFrame(renderFilmAmbilight);
-  }
-}
-
-function renderFilmAmbilight() {
-  if (!casaFilm || !filmAmbilightContext || casaFilm.readyState < 2) {
-    queueFilmAmbilightFrame();
-    return;
+  function queueAmbilightFrame() {
+    if (!video || video.paused || video.ended) return;
+    if ('requestVideoFrameCallback' in video) {
+      videoFrame = video.requestVideoFrameCallback(renderAmbilight);
+    } else {
+      animationFrame = requestAnimationFrame(renderAmbilight);
+    }
   }
 
-  try {
-    filmAmbilightContext.clearRect(0, 0, filmAmbilight.width, filmAmbilight.height);
-    filmAmbilightContext.save();
-    filmAmbilightContext.globalAlpha = 0.82;
-    filmAmbilightContext.filter = 'blur(30px) saturate(1.45) brightness(1.04)';
-    filmAmbilightContext.drawImage(casaFilm, 75, 90, 90, 160);
-    filmAmbilightContext.restore();
-    filmPlayerShell?.classList.add('is-reacting');
-  } catch (error) {
-    filmPlayerShell?.classList.remove('is-reacting');
-    return;
+  function renderAmbilight() {
+    if (!video || !context || video.readyState < 2) {
+      queueAmbilightFrame();
+      return;
+    }
+
+    try {
+      context.clearRect(0, 0, ambilight.width, ambilight.height);
+      context.save();
+      context.globalAlpha = 0.82;
+      context.filter = 'blur(30px) saturate(1.45) brightness(1.04)';
+      context.drawImage(video, 75, 90, 90, 160);
+      context.restore();
+      shell.classList.add('is-reacting');
+    } catch (error) {
+      shell.classList.remove('is-reacting');
+      return;
+    }
+    queueAmbilightFrame();
   }
-  queueFilmAmbilightFrame();
-}
 
-function stopFilmAmbilight(dim = true) {
-  cancelAnimationFrame(filmAmbilightFrame);
-  if (filmVideoFrame && casaFilm?.cancelVideoFrameCallback) casaFilm.cancelVideoFrameCallback(filmVideoFrame);
-  filmAmbilightFrame = undefined;
-  filmVideoFrame = undefined;
-  if (dim) filmPlayerShell?.classList.remove('is-reacting');
-}
-
-function startFilmAmbilight() {
-  if (!filmAmbilightContext) return;
-  stopFilmAmbilight(false);
-  queueFilmAmbilightFrame();
-}
-
-filmPlayButton?.addEventListener('click', async () => {
-  try {
-    await casaFilm.play();
-  } catch (error) {
-    casaFilm.controls = true;
+  function stopAmbilight(dim = true) {
+    cancelAnimationFrame(animationFrame);
+    if (videoFrame && video?.cancelVideoFrameCallback) video.cancelVideoFrameCallback(videoFrame);
+    animationFrame = undefined;
+    videoFrame = undefined;
+    if (dim) shell.classList.remove('is-reacting');
   }
-});
 
-casaFilm?.addEventListener('play', () => {
-  filmPlayButton?.classList.add('is-hidden');
-  startFilmAmbilight();
-});
+  function startAmbilight() {
+    if (!context) return;
+    stopAmbilight(false);
+    queueAmbilightFrame();
+  }
 
-casaFilm?.addEventListener('pause', () => stopFilmAmbilight());
+  playButton?.addEventListener('click', async () => {
+    try {
+      await video.play();
+    } catch (error) {
+      video.controls = true;
+    }
+  });
 
-casaFilm?.addEventListener('ended', () => {
-  filmPlayButton?.classList.remove('is-hidden');
-  stopFilmAmbilight();
-});
+  video?.addEventListener('play', () => {
+    document.querySelectorAll('.film-player-shell video').forEach((otherVideo) => {
+      if (otherVideo !== video && !otherVideo.paused) otherVideo.pause();
+    });
+    playButton?.classList.add('is-hidden');
+    startAmbilight();
+  });
+
+  video?.addEventListener('pause', () => stopAmbilight());
+  video?.addEventListener('ended', () => {
+    playButton?.classList.remove('is-hidden');
+    stopAmbilight();
+  });
+}
+
+document.querySelectorAll('.film-player-shell').forEach(setupFilmPlayer);
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener('click', (event) => {
